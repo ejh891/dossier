@@ -29,8 +29,6 @@ export default (state = initialState, action) => {
             ...state,
             // modify person in list
             persons: editPerson(state.persons, action.person),
-            // remove person from dirty list
-            dirtyPersons: state.dirtyPersons.filter(personId => personId !== action.person._id)
         }
     case ActionTypes.ADD_RECORD_SUCCESS:
         const personToEdit = state.persons.find(person => person._id === action.record.personId);
@@ -39,7 +37,6 @@ export default (state = initialState, action) => {
         return {
             ...state,
             persons: editPerson(state.persons, personToEdit),
-            dirtyPersons: [...state.dirtyPersons, action.record.personId]
         }
     case ActionTypes.SET_PERSONS_FAILURE:
     case ActionTypes.ADD_PERSON_FAILURE:
