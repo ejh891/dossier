@@ -1,4 +1,4 @@
 export default {
+    initializing: true,
     persons: [],
-    dirtyPersons: [],
 }

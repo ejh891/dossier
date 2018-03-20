@@ -18,21 +18,6 @@ class Person extends Component {
     this.onFolderClick = this.onFolderClick.bind(this);
   }
 
-  async componentDidUpdate() {
-    // if we added a new record or updated this person's info,
-    // we update the data directly (optimistic update), but we also mark the person as 'dirty',
-    // we display the optimistic data immediately, but fetch to revalidate
-    const {
-      match,
-    } = this.props;
-
-    const personId = match.params.personId;
-
-    if (this.props.dirtyPersons.includes(personId)) {
-      await this.props.personsActions.refreshPerson(personId);
-    }
-  }
-
   onFolderClick(path) {
     const {
       match,
@@ -64,7 +49,7 @@ class Person extends Component {
     const recordPath = history.location.pathname.split('/records')[1] || '/';
 
     if (!person) {
-      return <Redirect to="/" />
+      return <div>Person not found</div>
     }
 
     const records = person.records.filter(record => record.path.startsWith(recordPath));
@@ -88,7 +73,6 @@ class Person extends Component {
 function mapStateToProps(state) {
   return {
     persons: state.persons,
-    dirtyPersons: state.dirtyPersons,
   };
 }
 

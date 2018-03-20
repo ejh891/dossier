@@ -22,6 +22,16 @@ class App extends Component {
   }
 
   render() {
+    const {
+      initializing
+    } = this.props;
+    
+    if (initializing) {
+      return (
+        <div>Loading</div>
+      );
+    }
+
     return (
       <Switch>
         <Route exact path="/" component={Persons} />
@@ -41,6 +51,11 @@ class App extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    initializing: state.initializing,
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {

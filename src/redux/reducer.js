@@ -16,7 +16,8 @@ export default (state = initialState, action) => {
     case ActionTypes.SET_PERSONS_SUCCESS:
         return {
             ...state,
-            persons: [...state.persons, ...action.persons]
+            persons: [...state.persons, ...action.persons],
+            initializing: false,
         }
     case ActionTypes.ADD_PERSON_SUCCESS:
         return {
