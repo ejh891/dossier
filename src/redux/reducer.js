@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
         persons: [...state.persons, action.person]
       }
     case ActionTypes.ADD_RECORD_SUCCESS:
-      person = findPerson(state.persons, action.personId);
+      person = findPerson(state.persons, action.record.personId);
       person.records = [...person.records, action.record];
 
       return {
@@ -60,6 +60,9 @@ export default (state = initialState, action) => {
     case ActionTypes.FETCH_PERSONS_FAILURE:
     case ActionTypes.ADD_PERSON_FAILURE:
     case ActionTypes.ADD_RECORD_FAILURE:
+    case ActionTypes.DELETE_RECORD_FAILURE:
+      console.error(action.error);
+      return state;
     default:
       return state;
   }
