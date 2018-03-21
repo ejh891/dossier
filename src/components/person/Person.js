@@ -11,6 +11,7 @@ import PersonAvatar from 'components/shared/PersonAvatar';
 import FloatingAddButton from 'components/shared/floatingActionButtons/FloatingAddButton';
 import Records from 'components/records/Records';
 import NotFound from 'components/notFound/NotFound';
+import RouteUtil from 'utils/RouteUtil';
 
 class Person extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class Person extends Component {
 
     const personId = match.params.personId;
 
-    history.push(`/persons/${personId}/records${path}`)
+    history.push(RouteUtil.getRecordRoute(personId, path));
   }
 
   render() {
@@ -43,9 +44,6 @@ class Person extends Component {
 
     const personId = match.params.personId;
     const person = persons.find(person => person._id === personId);
-
-    const editPersonPath = `${match.url}/edit`;
-    const newRecordPath = `/persons/${personId}/newRecord`;
 
     const recordPath = history.location.pathname.split('/records')[1] || '/';
 
@@ -65,7 +63,7 @@ class Person extends Component {
           <PersonAvatar person={person} size={80} />
         </div>
         <Records records={records} onFolderClick={this.onFolderClick} path={recordPath} />
-        <FloatingAddButton onClick={() => { history.push(newRecordPath)}} />
+        <FloatingAddButton onClick={() => { history.push(RouteUtil.getNewRecordRoute(personId))}} />
       </Shell>
     );
   }
