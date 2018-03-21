@@ -8,6 +8,7 @@ import FileFolder from 'material-ui/svg-icons/file/folder';
 export default (props) => {
     const {
         directory,
+        rightIconButton,
         onClick,
     } = props;
 
@@ -17,6 +18,7 @@ export default (props) => {
             primaryText={directory.name}
             secondaryText={`${directory.files.length} record(s)`}
             onClick={() => { onClick(directory); }}
+            rightIconButton={rightIconButton}
         />
     )
 }

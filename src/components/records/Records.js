@@ -1,69 +1,73 @@
-import React, { Component } from 'react';
-import {List, ListItem} from 'material-ui/List';
-import groupBy from 'lodash.groupby';
+import React from 'react';
 
+import { List }  from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
-import ActionAssignment from 'material-ui/svg-icons/action/assignment';
-import { blue500 } from 'material-ui/styles/colors';
-import Avatar from 'material-ui/Avatar';
+import IconButton from 'material-ui/IconButton';
+import Delete from 'material-ui/svg-icons/action/delete';
+import { red300 } from 'material-ui/styles/colors';
 
-import RecordFolder from './RecordFolder';
+import RecordRow from './RecordRow';
+import RecordFolderRow from './RecordFolderRow';
+
 import FileSystem from 'lib/FileSystem';
 
-class Records extends Component {
-  render() {
-    const {
-      records,
-      path = '/',
-      onFolderClick,
-    } = this.props;
+export default (props) => {
+  const {
+    records,
+    path = '/',
+    onFolderClick,
+    onDeleteRecordClick,
+    editing,
+  } = props;
 
-    const fs = new FileSystem();
+  const fs = new FileSystem();
 
-    for (const record of records) {
-      fs.insert(record, record.path);
-    }
+  for (const record of records) {
+    fs.insert(record, record.path);
+  }
 
-    const root = fs.getTree(path);
+  const root = fs.getTree(path);
 
-    return (
-      <div>
-        {root.directories.length > 0 &&
-          <div>
-            <List>
-              <Subheader>Folders</Subheader>
-              {root.directories.map(directory => {
-                return (
-                  <RecordFolder
-                    key={directory.name}
-                    directory={directory}
-                    onClick={onFolderClick}
-                  />
-                );
-              })}
-            </List>
-            <Divider inset={true} />
-          </div>
-        }
-        {root.files.length > 0 &&
+  return (
+    <div>
+      {root.directories.length > 0 &&
+        <div>
           <List>
-            <Subheader>Records</Subheader>
-            {root.files.map(record => {
+            <Subheader>Folders</Subheader>
+            {root.directories.map(directory => {
               return (
-                <ListItem
-                  key={record._id}
-                  leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={blue500} />}
-                  primaryText={record.key}
-                  secondaryText={record.value}
+                <RecordFolderRow
+                  key={directory.name}
+                  directory={directory}
+                  onClick={onFolderClick}
                 />
               );
             })}
           </List>
-        }
-      </div>
-    );
-  }
+          <Divider inset={true} />
+        </div>
+      }
+      {root.files.length > 0 &&
+        <List>
+          <Subheader>Records</Subheader>
+          {root.files.map(record => {
+            return (
+              <RecordRow
+                key={record._id}
+                record={record}
+                rightIconButton={
+                  editing ? 
+                    <IconButton>
+                      <Delete onClick={() => { onDeleteRecordClick(record._id); }} color={red300} />
+                    </IconButton> 
+                    : null
+                }
+              />
+            );
+          })}
+        </List>
+      }
+    </div>
+  );
 }
-
-export default Records;

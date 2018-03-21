@@ -35,6 +35,7 @@ class NewRecord extends Component {
     const {
       match,
       history,
+      recordActions,
     } = this.props;
 
     const personId = match.params.personId;
@@ -56,7 +57,7 @@ class NewRecord extends Component {
       personId,
     };
 
-    await this.props.recordActions.addRecord(record)
+    await recordActions.addRecord(record)
 
     history.goBack();
   }

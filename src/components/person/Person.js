@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import * as appActions from 'redux/actions/appActions';
 import * as personActions from 'redux/actions/personActions';
+import * as recordActions from 'redux/actions/recordActions';
 
 import Shell from 'components/shared/Shell';
 import PersonAvatar from 'components/shared/PersonAvatar';
@@ -22,11 +23,11 @@ class Person extends Component {
     this.onFolderClick = this.onFolderClick.bind(this);
     this.onBackButtonClick = this.onBackButtonClick.bind(this);
     this.onToggleEditingClick = this.onToggleEditingClick.bind(this);
+    this.onDeleteRecordClick = this.onDeleteRecordClick.bind(this);
   }
 
   onBackButtonClick() {
     const {
-      match,
       history,
       editing,
       appActions,
@@ -73,6 +74,14 @@ class Person extends Component {
     appActions.toggleEditing(!editing);
   }
 
+  async onDeleteRecordClick(recordId) {
+    const {
+      recordActions,
+    } = this.props;
+
+    await recordActions.deleteRecord(recordId);
+  }
+
   render() {
     const {
       match,
@@ -105,7 +114,13 @@ class Person extends Component {
         <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
           <PersonAvatar person={person} size={80} />
         </div>
-        <Records records={person.records} onFolderClick={this.onFolderClick} path={recordPath} />
+        <Records
+          records={person.records}
+          path={recordPath}
+          editing={editing}
+          onFolderClick={this.onFolderClick}
+          onDeleteRecordClick={this.onDeleteRecordClick}
+        />
         <FloatingAddButton onClick={() => { history.push(RouteUtil.getNewRecordRoute(personId))}} />
       </Shell>
     );
@@ -123,6 +138,7 @@ function mapDispatchToProps(dispatch) {
   return {
     appActions: bindActionCreators(appActions, dispatch),
     personActions: bindActionCreators(personActions, dispatch),
+    recordActions: bindActionCreators(recordActions, dispatch),
   };
 }
 

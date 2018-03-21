@@ -15,6 +15,23 @@ export function addRecordFailure(error) {
     }
 }
 
+export function deleteRecordSuccess(personId, recordId) {
+    return {
+        type: Types.DELETE_RECORD_SUCCESS,
+        personId,
+        recordId,
+    }
+}
+
+export function deleteRecordFailure(error) {
+    return {
+        type: Types.DELETE_RECORD_FAILURE,
+        error
+    }
+}
+
+// asyn actions via Thunk
+
 export function addRecord(record) {
     return async (dispatch, getState) => {
         try {
@@ -23,6 +40,18 @@ export function addRecord(record) {
             dispatch(addRecordSuccess(newRecord));
         } catch (error) {
             dispatch(addRecordFailure(error));
+        }
+    }
+}
+
+export function deleteRecord(recordId) {
+    return async (dispatch, getState) => {
+        try {
+            const deletedRecord = await RecordService.delete(recordId);
+
+            dispatch(deleteRecordSuccess(deletedRecord.personId, deletedRecord._id));
+        } catch (error) {
+            dispatch(deleteRecordFailure(error));
         }
     }
 }
