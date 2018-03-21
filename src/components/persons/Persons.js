@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import List from 'material-ui/List/List';
 
 import Shell from 'components/shared/Shell';
-import PersonCard from './PersonCard';
+import PersonRow from './PersonRow';
 import FloatingAddButton from 'components/shared/floatingActionButtons/FloatingAddButton';
 
 class Persons extends Component {
@@ -21,15 +22,17 @@ class Persons extends Component {
     
     return (
       <Shell>
-        {this.props.persons.map(person => {
-          return (
-            <PersonCard
-              key={person._id}
-              person={person}
-              onClick={() => { this.props.history.push(`/persons/${person._id}`)}}
-            />
-          );
-        })}
+        <List>
+          {this.props.persons.map(person => {
+            return (
+              <PersonRow
+                key={person._id}
+                person={person}
+                onClick={() => { this.props.history.push(`/persons/${person._id}`)}}
+              />
+            );
+          })}
+        </List>
         <FloatingAddButton onClick={() => { history.push(newPersonPath)} } />
       </Shell>
     );

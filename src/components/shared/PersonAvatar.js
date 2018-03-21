@@ -1,10 +1,15 @@
 import React from 'react';
 import Avatar from 'material-ui/Avatar';
+import { red300, orange300, yellow300, green300, blue300, purple300 } from 'material-ui/styles/colors';
+import sample from 'lodash.sample';
+
+const colors = [ red300, orange300, yellow300, green300, blue300, purple300 ];
 
 export default (props) => {
   const {
     person,
     size = 40,
+    backgroundColor,
     style,
   } = props;
 
@@ -19,6 +24,6 @@ export default (props) => {
       .reduce((acc, letter) => { return acc + letter; }, '') // reduce to a string
       .slice(0, 2); // take the first 2 letters
 
-    return (<Avatar size={size} style={style}>{initials}</Avatar>);
+    return (<Avatar size={size} backgroundColor={backgroundColor || sample(colors)} style={style}>{initials}</Avatar>);
   }
 }
