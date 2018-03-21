@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import TextField from 'material-ui/TextField';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 
-import * as personsActions from 'redux/actions/personsActions';
+import * as personActions from 'redux/actions/personActions';
 import Shell from 'components/shared/Shell';
 import FloatingSaveButton from 'components/shared/floatingActionButtons/FloatingSaveButton';
 
@@ -35,7 +35,7 @@ class NewPerson extends Component {
       name: this.state.name
     };
 
-    await this.props.personsActions.addPerson(person);
+    await this.props.personActions.addPerson(person);
 
     history.goBack();
   }
@@ -64,7 +64,7 @@ class NewPerson extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    personsActions: bindActionCreators(personsActions, dispatch)
+    personActions: bindActionCreators(personActions, dispatch)
   };
 }
 

@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import FlatButton from 'material-ui/FlatButton';
 
-import * as personsActions from 'redux/actions/personsActions';
+import * as appActions from 'redux/actions/appActions';
+import * as personActions from 'redux/actions/personActions';
 
 import Shell from 'components/shared/Shell';
 import PersonAvatar from 'components/shared/PersonAvatar';
@@ -19,13 +21,21 @@ class Person extends Component {
 
     this.onFolderClick = this.onFolderClick.bind(this);
     this.onBackButtonClick = this.onBackButtonClick.bind(this);
+    this.onToggleEditingClick = this.onToggleEditingClick.bind(this);
   }
 
   onBackButtonClick() {
     const {
       match,
       history,
+      editing,
+      appActions,
     } = this.props;
+
+    // if editing, exit editing
+    if (editing) {
+      appActions.toggleEditing(false);
+    }
 
     let currentURL = history.location.pathname;
     if (currentURL.endsWith('/')) {
@@ -54,11 +64,21 @@ class Person extends Component {
     history.push(RouteUtil.getRecordRoute(personId, path));
   }
 
+  onToggleEditingClick() {
+    const {
+      editing,
+      appActions
+    } = this.props;
+
+    appActions.toggleEditing(!editing);
+  }
+
   render() {
     const {
       match,
       history,
       persons,
+      editing,
     } = this.props;
 
     if (!match.url.includes('records')) {
@@ -79,6 +99,8 @@ class Person extends Component {
         title={person.name}
         iconElementLeft={<KeyboardArrowLeft />}
         onLeftIconButtonClick={this.onBackButtonClick}
+        iconElementRight={<FlatButton label={editing ? "done" : "edit"} />}
+        onRightIconButtonClick={this.onToggleEditingClick}
       >
         <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
           <PersonAvatar person={person} size={80} />
@@ -93,12 +115,14 @@ class Person extends Component {
 function mapStateToProps(state) {
   return {
     persons: state.persons,
+    editing: state.editing,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    personsActions: bindActionCreators(personsActions, dispatch)
+    appActions: bindActionCreators(appActions, dispatch),
+    personActions: bindActionCreators(personActions, dispatch),
   };
 }
 

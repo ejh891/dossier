@@ -8,6 +8,8 @@ class Shell extends Component {
       title = 'Dossier',
       iconElementLeft,
       onLeftIconButtonClick,
+      iconElementRight,
+      onRightIconButtonClick,
     } = this.props;
 
     return (
@@ -15,6 +17,8 @@ class Shell extends Component {
         <AppBar
           iconElementLeft={<IconButton>{iconElementLeft}</IconButton>}
           onLeftIconButtonClick={onLeftIconButtonClick}
+          iconElementRight={iconElementRight}
+          onRightIconButtonClick={onRightIconButtonClick}
           title={title}
           style={{
             position: 'fixed',

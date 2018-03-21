@@ -1,3 +1,7 @@
+// app
+
+export const TOGGLE_EDITING = 'TOGGLE_EDITING';
+
 // persons
 
 export const FETCH_PERSONS_SUCCESS = 'FETCH_PERSONS_SUCCESS';

@@ -13,6 +13,12 @@ function editPerson(originalPersons, updatedPerson) {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ActionTypes.TOGGLE_EDITING:
+        return {
+            ...state,
+            // if a bool was supplied, use it. Otherwise, just toggle the existing value
+            editing: action.editing !== undefined ? action.editing : !state.editing,
+        }
     case ActionTypes.FETCH_PERSONS_SUCCESS:
         return {
             ...state,

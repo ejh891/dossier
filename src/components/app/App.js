@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
-import * as personsActions from 'redux/actions/personsActions';
+import * as personActions from 'redux/actions/personActions';
 
 import Persons from 'components/persons/Persons';
 import Person from 'components/person/Person';
@@ -18,7 +18,7 @@ import './App.css';
 
 class App extends Component {
   componentDidMount() {
-    this.props.personsActions.fetchPersons();
+    this.props.personActions.fetchPersons();
   }
 
   render() {
@@ -59,7 +59,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    personsActions: bindActionCreators(personsActions, dispatch)
+    personActions: bindActionCreators(personActions, dispatch)
   };
 }
 

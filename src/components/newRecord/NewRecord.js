@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 
-import * as recordsActions from 'redux/actions/recordsActions';
+import * as recordActions from 'redux/actions/recordActions';
 
 import Shell from 'components/shared/Shell';
 import FloatingSaveButton from 'components/shared/floatingActionButtons/FloatingSaveButton';
@@ -56,7 +56,7 @@ class NewRecord extends Component {
       personId,
     };
 
-    await this.props.recordsActions.addRecord(record)
+    await this.props.recordActions.addRecord(record)
 
     history.goBack();
   }
@@ -113,7 +113,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    recordsActions: bindActionCreators(recordsActions, dispatch)
+    recordActions: bindActionCreators(recordActions, dispatch)
   };
 }
 
