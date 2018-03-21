@@ -9,6 +9,7 @@ import { blue500 } from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
 
 import RecordFolder from './RecordFolder';
+import FileSystem from 'lib/FileSystem';
 
 class Records extends Component {
   render() {
@@ -18,27 +19,25 @@ class Records extends Component {
       onFolderClick,
     } = this.props;
 
-    // files in this directory
-    const files = records.filter(record => record.path === path);
-    
-    // files *not* in this directory
-    const subFiles = records.filter(record => record.path !== path);
+    const fs = new FileSystem();
 
-    const folders = groupBy(subFiles, 'path');
-    const folderNames = Object.keys(folders);
+    for (const record of records) {
+      fs.insert(record, record.path);
+    }
+
+    const root = fs.getTree(path);
 
     return (
       <div>
-        {folderNames.length > 0 &&
+        {root.directories.length > 0 &&
           <div>
             <List>
               <Subheader>Folders</Subheader>
-              {folderNames.map(folderName => {
+              {root.directories.map(directory => {
                 return (
                   <RecordFolder
-                    key={folderName}
-                    name={folderName}
-                    records={folders[folderName]}
+                    key={directory.name}
+                    directory={directory}
                     onClick={onFolderClick}
                   />
                 );
@@ -47,10 +46,10 @@ class Records extends Component {
             <Divider inset={true} />
           </div>
         }
-        {files.length > 0 &&
+        {root.files.length > 0 &&
           <List>
             <Subheader>Records</Subheader>
-            {files.map(record => {
+            {root.files.map(record => {
               return (
                 <ListItem
                   key={record._id}

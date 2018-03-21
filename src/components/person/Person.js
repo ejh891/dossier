@@ -18,16 +18,39 @@ class Person extends Component {
     super(props);
 
     this.onFolderClick = this.onFolderClick.bind(this);
+    this.onBackButtonClick = this.onBackButtonClick.bind(this);
   }
 
-  onFolderClick(path) {
+  onBackButtonClick() {
+    const {
+      match,
+      history,
+    } = this.props;
+
+    let currentURL = history.location.pathname;
+    if (currentURL.endsWith('/')) {
+      currentURL = currentURL.slice(0, -1);
+    }
+
+    // split, remove last path, re-join
+    const newURL = currentURL.split('/').slice(0, -1).join('/');
+
+    // if we hit back at the root directory, go to persons
+    if (newURL.indexOf('records') === -1) {
+      history.push('/persons');
+    } else {
+      history.push(newURL);
+    }
+  }
+
+  onFolderClick(directory) {
     const {
       match,
       history,
     } = this.props;
 
     const personId = match.params.personId;
-
+    const path = directory.getFullPath();
     history.push(RouteUtil.getRecordRoute(personId, path));
   }
 
@@ -51,18 +74,16 @@ class Person extends Component {
       return <NotFound />
     }
 
-    const records = person.records.filter(record => record.path.startsWith(recordPath));
-
     return (
       <Shell
         title={person.name}
         iconElementLeft={<KeyboardArrowLeft />}
-        onLeftIconButtonClick={history.goBack}
+        onLeftIconButtonClick={this.onBackButtonClick}
       >
         <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
           <PersonAvatar person={person} size={80} />
         </div>
-        <Records records={records} onFolderClick={this.onFolderClick} path={recordPath} />
+        <Records records={person.records} onFolderClick={this.onFolderClick} path={recordPath} />
         <FloatingAddButton onClick={() => { history.push(RouteUtil.getNewRecordRoute(personId))}} />
       </Shell>
     );

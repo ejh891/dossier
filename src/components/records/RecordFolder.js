@@ -7,17 +7,16 @@ import FileFolder from 'material-ui/svg-icons/file/folder';
 
 export default (props) => {
     const {
-        name,
-        records,
+        directory,
         onClick,
     } = props;
 
     return (
         <ListItem
             leftAvatar={<Avatar icon={<FileFolder />} backgroundColor={yellow300} />}
-            primaryText={name}
-            secondaryText={`${records.length} record(s)`}
-            onClick={() => { onClick(name, records); }}
+            primaryText={directory.name}
+            secondaryText={`${directory.files.length} record(s)`}
+            onClick={() => { onClick(directory); }}
         />
     )
 }
