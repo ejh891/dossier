@@ -13,7 +13,7 @@ function editPerson(originalPersons, updatedPerson) {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.SET_PERSONS_SUCCESS:
+    case ActionTypes.FETCH_PERSONS_SUCCESS:
         return {
             ...state,
             persons: [...state.persons, ...action.persons],
@@ -24,12 +24,6 @@ export default (state = initialState, action) => {
             ...state,
             persons: [...state.persons, action.person]
         }
-    case ActionTypes.REFRESH_PERSON_SUCCESS:
-        return {
-            ...state,
-            // modify person in list
-            persons: editPerson(state.persons, action.person),
-        }
     case ActionTypes.ADD_RECORD_SUCCESS:
         const personToEdit = state.persons.find(person => person._id === action.record.personId);
         personToEdit.records = [...personToEdit.records, action.record];
@@ -38,7 +32,7 @@ export default (state = initialState, action) => {
             ...state,
             persons: editPerson(state.persons, personToEdit),
         }
-    case ActionTypes.SET_PERSONS_FAILURE:
+    case ActionTypes.FETCH_PERSONS_FAILURE:
     case ActionTypes.ADD_PERSON_FAILURE:
     case ActionTypes.ADD_RECORD_FAILURE:
     default:

@@ -18,14 +18,14 @@ import './App.css';
 
 class App extends Component {
   componentDidMount() {
-    this.props.personsActions.fetchAllPersons();
+    this.props.personsActions.fetchPersons();
   }
 
   render() {
     const {
       initializing
     } = this.props;
-    
+
     if (initializing) {
       return (
         <div>Loading</div>
@@ -63,4 +63,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

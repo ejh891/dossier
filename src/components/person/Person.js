@@ -10,6 +10,7 @@ import Shell from 'components/shared/Shell';
 import PersonAvatar from 'components/shared/PersonAvatar';
 import FloatingAddButton from 'components/shared/floatingActionButtons/FloatingAddButton';
 import Records from 'components/records/Records';
+import NotFound from 'components/notFound/NotFound';
 
 class Person extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class Person extends Component {
     const recordPath = history.location.pathname.split('/records')[1] || '/';
 
     if (!person) {
-      return <div>Person not found</div>
+      return <NotFound />
     }
 
     const records = person.records.filter(record => record.path.startsWith(recordPath));

@@ -15,42 +15,42 @@ export function addPersonFailure(error) {
     }
 }
 
-export function setPersonsSuccess(persons) {
+export function fetchPersonsSuccess(persons) {
     return {
-        type: Types.SET_PERSONS_SUCCESS,
+        type: Types.FETCH_PERSONS_SUCCESS,
         persons
     }
 }
 
-export function setPersonsFailure(error) {
+export function fetchPersonsFailure(error) {
     return {
-        type: Types.SET_PERSONS_FAILURE,
+        type: Types.FETCH_PERSONS_FAILURE,
         error
     }
 }
 
-export function refreshPersonSuccess(person) {
+export function fetchPersonSuccess(person) {
     return {
-        type: Types.REFRESH_PERSON_SUCCESS,
+        type: Types.FETCH_PERSON_SUCCESS,
         person
     }
 }
 
-export function refreshPersonFailure(error) {
+export function fetchPersonFailure(error) {
     return {
-        type: Types.REFRESH_PERSON_FAILURE,
+        type: Types.FETCH_PERSON_FAILURE,
         error
     }
 }
 
-export function fetchAllPersons() {
+export function fetchPersons() {
     return async (dispatch, getState) => {
         try {
             const persons = await PersonService.browse();
 
-            dispatch(setPersonsSuccess(persons));
+            dispatch(fetchPersonsSuccess(persons));
         } catch (error) {
-            dispatch(setPersonsFailure(error));
+            dispatch(fetchPersonsFailure(error));
         }
     }
 }
@@ -67,14 +67,14 @@ export function addPerson(person) {
     }
 }
 
-export function refreshPerson(personId) {
+export function fetchPerson(personId) {
     return async (dispatch, getState) => {
         try {
             const person = await PersonService.read(personId);
 
-            dispatch(refreshPersonSuccess(person));
+            dispatch(fetchPersonSuccess(person));
         } catch (error) {
-            dispatch(refreshPersonFailure(error));
+            dispatch(fetchPersonFailure(error));
         }
     }
 }
