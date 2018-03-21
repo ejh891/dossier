@@ -36,6 +36,7 @@ class Records extends Component {
               {folderNames.map(folderName => {
                 return (
                   <RecordFolder
+                    key={folderName}
                     name={folderName}
                     records={folders[folderName]}
                     onClick={onFolderClick}
@@ -52,6 +53,7 @@ class Records extends Component {
             {files.map(record => {
               return (
                 <ListItem
+                  key={record._id}
                   leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={blue500} />}
                   primaryText={record.key}
                   secondaryText={record.value}

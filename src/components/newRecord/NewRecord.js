@@ -16,8 +16,8 @@ class NewRecord extends Component {
     super(props);
 
     this.state = {
-      title: '',
-      details: '',
+      key: '',
+      value: '',
       path: '',
     };
 
@@ -50,8 +50,8 @@ class NewRecord extends Component {
     }
 
     const record = {
-      key: this.state.title,
-      value: this.state.details,
+      key: this.state.key,
+      value: this.state.value,
       path,
       personId,
     };
@@ -85,18 +85,18 @@ class NewRecord extends Component {
           <PersonAvatar person={person} size={80} />
         </div>
         <TextField
-          onChange={(event) => { this.textFieldOnChange('title', event); }}
+          onChange={(event) => { this.textFieldOnChange('key', event); }}
           floatingLabelText="Title"
           fullWidth={true}
         />
         <TextField
-          onChange={(event) => { this.textFieldOnChange('details', event); }}
+          onChange={(event) => { this.textFieldOnChange('value', event); }}
           floatingLabelText="Details"
           fullWidth={true}
         />
         <TextField
           onChange={(event) => { this.textFieldOnChange('path', event); }}
-          floatingLabelText="Folder"
+          floatingLabelText="Folder (Optional)"
           fullWidth={true}
         />
         <FloatingSaveButton onClick={this.saveRecord}/>

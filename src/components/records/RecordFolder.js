@@ -1,4 +1,5 @@
 import React from 'react';
+import { yellow300 } from 'material-ui/styles/colors';
 
 import { ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
@@ -13,7 +14,7 @@ export default (props) => {
 
     return (
         <ListItem
-            leftAvatar={<Avatar icon={<FileFolder />} />}
+            leftAvatar={<Avatar icon={<FileFolder />} backgroundColor={yellow300} />}
             primaryText={name}
             secondaryText={`${records.length} record(s)`}
             onClick={() => { onClick(name, records); }}
