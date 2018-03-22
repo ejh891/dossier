@@ -14,16 +14,30 @@ import PersonAvatar from 'components/shared/PersonAvatar';
 import FloatingAddButton from 'components/shared/floatingActionButtons/FloatingAddButton';
 import Records from 'components/records/Records';
 import NotFound from 'components/notFound/NotFound';
+import RecordMenu from 'components/records/RecordMenu';
+
 import RouteUtil from 'utils/RouteUtil';
 
 class Person extends Component {
   constructor(props) {
     super(props);
 
-    this.onFolderClick = this.onFolderClick.bind(this);
     this.onBackButtonClick = this.onBackButtonClick.bind(this);
-    this.onToggleEditingClick = this.onToggleEditingClick.bind(this);
+    
+    this.onFolderClick = this.onFolderClick.bind(this);
+    this.onRecordHold = this.onRecordHold.bind(this);
+
+    this.onEditPersonClick = this.onEditPersonClick.bind(this);
+
     this.onDeleteRecordClick = this.onDeleteRecordClick.bind(this);
+    this.onEditRecordClick = this.onEditRecordClick.bind(this);
+    this.onMenuRequestClose = this.onMenuRequestClose.bind(this);
+
+    this.state = {
+      menuOpen: false,
+      menuTargetEl: null,
+      menuTargetRecord: null,
+    };
   }
 
   onBackButtonClick() {
@@ -65,13 +79,24 @@ class Person extends Component {
     history.push(RouteUtil.getRecordRoute(personId, path));
   }
 
-  onToggleEditingClick() {
-    const {
-      editing,
-      appActions
-    } = this.props;
+  onRecordHold(event, record) {
+    this.setState({
+      menuOpen: true,
+      menuAnchorEl: event.currentTarget,
+      menuTargetRecord: record,
+    });
+  }
 
-    appActions.toggleEditing(!editing);
+  onMenuRequestClose() {
+    this.setState({
+      menuOpen: false,
+      menuAnchorEl: null,
+      menuTargetRecord: null,
+    });
+  }
+
+  async onEditPersonClick() {
+    // stub
   }
 
   async onDeleteRecordClick(recordId) {
@@ -80,6 +105,10 @@ class Person extends Component {
     } = this.props;
 
     await recordActions.deleteRecord(recordId);
+  }
+
+  async onEditRecordClick(recordId) {
+    //stub
   }
 
   render() {
@@ -109,7 +138,7 @@ class Person extends Component {
         iconElementLeft={<KeyboardArrowLeft />}
         onLeftIconButtonClick={this.onBackButtonClick}
         iconElementRight={<FlatButton label={editing ? "done" : "edit"} />}
-        onRightIconButtonClick={this.onToggleEditingClick}
+        onRightIconButtonClick={this.onEditPersonClick}
       >
         <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
           <PersonAvatar person={person} size={80} />
@@ -117,11 +146,18 @@ class Person extends Component {
         <Records
           records={person.records}
           path={recordPath}
-          editing={editing}
           onFolderClick={this.onFolderClick}
-          onDeleteRecordClick={this.onDeleteRecordClick}
+          onRecordHold={this.onRecordHold}
         />
         <FloatingAddButton onClick={() => { history.push(RouteUtil.getNewRecordRoute(personId))}} />
+        <RecordMenu
+          open={this.state.menuOpen}
+          anchorEl={this.state.menuAnchorEl}
+          targetRecord={this.state.menuTargetRecord}
+          onDeleteClick={this.onDeleteRecordClick}
+          onEditClick={this.onEditRecordClick}
+          onRequestClose={this.onMenuRequestClose}
+        />
       </Shell>
     );
   }

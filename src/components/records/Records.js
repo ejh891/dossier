@@ -4,8 +4,6 @@ import { List }  from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
 import IconButton from 'material-ui/IconButton';
-import Delete from 'material-ui/svg-icons/action/delete';
-import { red300 } from 'material-ui/styles/colors';
 
 import RecordRow from './RecordRow';
 import RecordFolderRow from './RecordFolderRow';
@@ -17,6 +15,7 @@ export default (props) => {
     records,
     path = '/',
     onFolderClick,
+    onRecordHold,
     onDeleteRecordClick,
     editing,
   } = props;
@@ -56,13 +55,7 @@ export default (props) => {
               <RecordRow
                 key={record._id}
                 record={record}
-                rightIconButton={
-                  editing ? 
-                    <IconButton>
-                      <Delete onClick={() => { onDeleteRecordClick(record._id); }} color={red300} />
-                    </IconButton> 
-                    : null
-                }
+                onHold={onRecordHold}
               />
             );
           })}

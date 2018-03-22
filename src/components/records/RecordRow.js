@@ -1,4 +1,6 @@
 import React from 'react';
+import { Holdable } from 'react-touch';
+
 import { blue300 } from 'material-ui/styles/colors';
 
 import { ListItem } from 'material-ui/List';
@@ -8,16 +10,18 @@ import Description from 'material-ui/svg-icons/action/description';
 export default (props) => {
     const {
         record,
-        rightIconButton,
+        onHold,
     } = props;
 
+    let ref;
     return (
-      <ListItem
-        key={record._id}
-        leftAvatar={<Avatar icon={<Description />} backgroundColor={blue300} />}
-        primaryText={record.key}
-        secondaryText={record.value}
-        rightIconButton={rightIconButton}
-      />
-    )
+      <Holdable onHoldComplete={(event) => { onHold(event, record); }}>
+        <ListItem
+          key={record._id}
+          leftAvatar={<Avatar icon={<Description />} backgroundColor={blue300} />}
+          primaryText={record.key}
+          secondaryText={record.value}
+        />   
+      </Holdable>
+    );
 }
