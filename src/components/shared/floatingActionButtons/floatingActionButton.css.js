@@ -1,5 +1,7 @@
+import { floatingActionButtonRight, floatingActionButtonBottom } from 'settings/style';
+
 export const floatingActionButton = {
     position: 'fixed',
-    bottom: '30px',
-    right: '30px'
+    bottom: `${floatingActionButtonBottom}px`,
+    right: `${floatingActionButtonRight}px`
 };

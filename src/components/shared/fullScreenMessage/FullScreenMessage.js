@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Shell from 'components/shared/Shell';
-import { appBarHeightPx } from 'settings/style';
+import { appBarHeight } from 'settings/style';
 
 export default (props) => {
   const {
@@ -12,7 +12,7 @@ export default (props) => {
   return (
     <Shell>
       <div style={{
-        height: `calc(100vh - ${appBarHeightPx}px)`,
+        height: `calc(100vh - ${appBarHeight}px)`,
         width: '100vw',
         display: 'flex',
         justifyContent: 'center',

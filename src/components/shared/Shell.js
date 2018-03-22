@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 
-import { appBarHeightPx } from 'settings/style';
+import { appBarHeight } from 'settings/style';
 
 class Shell extends Component {
   render() {
@@ -29,7 +29,7 @@ class Shell extends Component {
             right: 0,
           }}
         />
-        <div style={{ marginTop: appBarHeightPx }}>
+        <div style={{ marginTop: appBarHeight }}>
           {this.props.children}
         </div>
       </div>
