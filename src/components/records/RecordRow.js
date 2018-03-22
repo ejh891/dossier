@@ -1,5 +1,4 @@
 import React from 'react';
-import { Holdable } from 'react-touch';
 
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';

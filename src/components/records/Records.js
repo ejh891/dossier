@@ -3,7 +3,6 @@ import React from 'react';
 import { List }  from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
-import IconButton from 'material-ui/IconButton';
 
 import RecordRow from './RecordRow';
 import RecordFolderRow from './RecordFolderRow';
