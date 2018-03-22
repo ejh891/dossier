@@ -14,7 +14,6 @@ import PersonAvatar from 'components/shared/PersonAvatar';
 import FloatingAddButton from 'components/shared/floatingActionButtons/FloatingAddButton';
 import Records from 'components/records/Records';
 import NotFound from 'components/notFound/NotFound';
-import RecordMenu from 'components/records/RecordMenu';
 
 import RouteUtil from 'utils/RouteUtil';
 
@@ -25,19 +24,11 @@ class Person extends Component {
     this.onBackButtonClick = this.onBackButtonClick.bind(this);
     
     this.onFolderClick = this.onFolderClick.bind(this);
-    this.onRecordHold = this.onRecordHold.bind(this);
 
     this.onEditPersonClick = this.onEditPersonClick.bind(this);
 
     this.onDeleteRecordClick = this.onDeleteRecordClick.bind(this);
     this.onEditRecordClick = this.onEditRecordClick.bind(this);
-    this.onMenuRequestClose = this.onMenuRequestClose.bind(this);
-
-    this.state = {
-      menuOpen: false,
-      menuTargetEl: null,
-      menuTargetRecord: null,
-    };
   }
 
   onBackButtonClick() {
@@ -77,22 +68,6 @@ class Person extends Component {
     const personId = match.params.personId;
     const path = directory.getFullPath();
     history.push(RouteUtil.getRecordRoute(personId, path));
-  }
-
-  onRecordHold(event, record) {
-    this.setState({
-      menuOpen: true,
-      menuAnchorEl: event.currentTarget,
-      menuTargetRecord: record,
-    });
-  }
-
-  onMenuRequestClose() {
-    this.setState({
-      menuOpen: false,
-      menuAnchorEl: null,
-      menuTargetRecord: null,
-    });
   }
 
   async onEditPersonClick() {
@@ -147,17 +122,10 @@ class Person extends Component {
           records={person.records}
           path={recordPath}
           onFolderClick={this.onFolderClick}
-          onRecordHold={this.onRecordHold}
+          onDeleteRecordClick={this.onDeleteRecordClick}
+          onEditRecordClick={this.onEditRecordClick}
         />
         <FloatingAddButton onClick={() => { history.push(RouteUtil.getNewRecordRoute(personId))}} />
-        <RecordMenu
-          open={this.state.menuOpen}
-          anchorEl={this.state.menuAnchorEl}
-          targetRecord={this.state.menuTargetRecord}
-          onDeleteClick={this.onDeleteRecordClick}
-          onEditClick={this.onEditRecordClick}
-          onRequestClose={this.onMenuRequestClose}
-        />
       </Shell>
     );
   }

@@ -15,9 +15,8 @@ export default (props) => {
     records,
     path = '/',
     onFolderClick,
-    onRecordHold,
     onDeleteRecordClick,
-    editing,
+    onEditRecordClick,
   } = props;
 
   const fs = new FileSystem();
@@ -55,7 +54,8 @@ export default (props) => {
               <RecordRow
                 key={record._id}
                 record={record}
-                onHold={onRecordHold}
+                onDeleteClick={onDeleteRecordClick}
+                onEditClick={onEditRecordClick}
               />
             );
           })}
