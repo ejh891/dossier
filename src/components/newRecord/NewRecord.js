@@ -57,7 +57,7 @@ class NewRecord extends Component {
       personId,
     };
 
-    await recordActions.addRecord(record)
+    await recordActions.addRecord(record);
 
     history.goBack();
   }

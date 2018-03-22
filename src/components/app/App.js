@@ -5,6 +5,10 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 
 import * as personActions from 'redux/actions/personActions';
 
+import Loading from 'components/shared/fullScreenMessage/Loading';
+import Saving from 'components/shared/fullScreenMessage/Saving';
+import Deleting from 'components/shared/fullScreenMessage/Deleting';
+
 import Persons from 'components/persons/Persons';
 import Person from 'components/person/Person';
 import NewPerson from 'components/newPerson/NewPerson';
@@ -23,12 +27,26 @@ class App extends Component {
 
   render() {
     const {
-      initializing
+      initializing,
+      saving,
+      deleting,
     } = this.props;
 
     if (initializing) {
       return (
-        <div>Loading</div>
+        <Loading />
+      );
+    }
+
+    if (saving) {
+      return (
+        <Saving />
+      );
+    }
+
+    if (deleting) {
+      return (
+        <Deleting />
       );
     }
 
@@ -54,6 +72,8 @@ class App extends Component {
 function mapStateToProps(state) {
   return {
     initializing: state.initializing,
+    saving: state.saving,
+    deleting: state.deleting,
   };
 }
 

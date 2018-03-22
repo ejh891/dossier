@@ -1,4 +1,5 @@
 import * as Types from './actionTypes';
+import * as appActions from './appActions';
 import PersonService from 'services/PersonService';
 
 export function addPersonSuccess(person) {
@@ -58,6 +59,8 @@ export function fetchPersons() {
 export function addPerson(person) {
     return async (dispatch, getState) => {
         try {
+            dispatch(appActions.toggleSaving(true));
+            
             const newPerson = await PersonService.add(person);
 
             dispatch(addPersonSuccess(newPerson));

@@ -1,6 +1,8 @@
 // app
 
 export const TOGGLE_EDITING = 'TOGGLE_EDITING';
+export const TOGGLE_SAVING = 'TOGGLE_SAVING';
+export const TOGGLE_DELETING = 'TOGGLE_DELETING';
 
 // persons
 

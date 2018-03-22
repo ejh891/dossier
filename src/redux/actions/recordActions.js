@@ -1,4 +1,5 @@
 import * as Types from './actionTypes';
+import * as appActions from './appActions';
 import RecordService from 'services/RecordService';
 
 export function addRecordSuccess(record) {
@@ -35,6 +36,7 @@ export function deleteRecordFailure(error) {
 export function addRecord(record) {
     return async (dispatch, getState) => {
         try {
+            dispatch(appActions.toggleSaving(true));
             const newRecord = await RecordService.add(record);
 
             dispatch(addRecordSuccess(newRecord));
@@ -47,6 +49,7 @@ export function addRecord(record) {
 export function deleteRecord(recordId) {
     return async (dispatch, getState) => {
         try {
+            dispatch(appActions.toggleDeleting(true));
             const deletedRecord = await RecordService.delete(recordId);
 
             dispatch(deleteRecordSuccess(deletedRecord.personId, deletedRecord._id));

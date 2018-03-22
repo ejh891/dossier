@@ -30,6 +30,19 @@ export default (state = initialState, action) => {
         // if a bool was supplied, use it. Otherwise, just toggle the existing value
         editing: action.editing !== undefined ? action.editing : !state.editing,
       }
+    case ActionTypes.TOGGLE_SAVING:
+      return {
+        ...state,
+        // if a bool was supplied, use it. Otherwise, just toggle the existing value
+        saving: action.saving !== undefined ? action.saving : !state.saving,
+      }
+    case ActionTypes.TOGGLE_DELETING:
+      return {
+        ...state,
+        // if a bool was supplied, use it. Otherwise, just toggle the existing value
+        deleting: action.deleting !== undefined ? action.deleting : !state.deleting,
+      }
+
     case ActionTypes.FETCH_PERSONS_SUCCESS:
       return {
         ...state,
@@ -39,8 +52,10 @@ export default (state = initialState, action) => {
     case ActionTypes.ADD_PERSON_SUCCESS:
       return {
         ...state,
-        persons: [...state.persons, action.person]
+        persons: [...state.persons, action.person],
+        saving: false,
       }
+
     case ActionTypes.ADD_RECORD_SUCCESS:
       person = findPerson(state.persons, action.record.personId);
       person.records = [...person.records, action.record];
@@ -48,6 +63,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         persons: replacePerson(state.persons, person),
+        saving: false,
       }
     case ActionTypes.DELETE_RECORD_SUCCESS:
       person = findPerson(state.persons, action.personId);
@@ -56,13 +72,30 @@ export default (state = initialState, action) => {
       return {
         ...state,
         persons: replacePerson(state.persons, person),
+        deleting: false,
+      }
+    case ActionTypes.ADD_PERSON_FAILURE:
+      console.error('Error saving person', action.error);
+        
+      return {
+        ...state,
+        saving: false,
+      }
+    case ActionTypes.ADD_RECORD_FAILURE:
+      console.error('Error saving record', action.error);
+      
+      return {
+        ...state,
+        saving: false,
+      }
+    case ActionTypes.DELETE_RECORD_FAILURE:
+      console.error('Error deleting record', action.error);
+    
+      return {
+        ...state,
+        deleting: false,
       }
     case ActionTypes.FETCH_PERSONS_FAILURE:
-    case ActionTypes.ADD_PERSON_FAILURE:
-    case ActionTypes.ADD_RECORD_FAILURE:
-    case ActionTypes.DELETE_RECORD_FAILURE:
-      console.error(action.error);
-      return state;
     default:
       return state;
   }

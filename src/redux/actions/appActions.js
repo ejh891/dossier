@@ -6,3 +6,17 @@ export function toggleEditing(editing) {
         editing,
     }
 }
+
+export function toggleSaving(saving) {
+    return {
+        type: ActionTypes.TOGGLE_SAVING,
+        saving,
+    }
+}
+
+export function toggleDeleting(deleting) {
+    return {
+        type: ActionTypes.TOGGLE_DELETING,
+        deleting,
+    }
+}

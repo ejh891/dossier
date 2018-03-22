@@ -1,7 +1,7 @@
 import React from 'react';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentSave from 'material-ui/svg-icons/content/save';
+import Save from 'material-ui/svg-icons/content/save';
 import * as style from './floatingActionButton.css';
 
 export default (props) => {
@@ -9,7 +9,7 @@ export default (props) => {
     <FloatingActionButton
       style={style.floatingActionButton}
       onClick={props.onClick}>
-      <ContentSave />
+      <Save />
     </FloatingActionButton>
   );
 }
