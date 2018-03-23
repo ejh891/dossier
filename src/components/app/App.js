@@ -59,9 +59,9 @@ class App extends Component {
         <Route path="/persons/:personId/records" component={Person} />
 
         <Route exact path="/newPerson" component={NewPerson} />
-        <Route exact path="/persons/:personId/edit" component={EditPerson} />
+        <Route exact path="/persons/editPerson/:personId" component={EditPerson} />
         <Route exact path="/persons/:personId/records/:recordId" component={Record} />
-        <Route exact path="/persons/:personId/records/:recordId/edit" component={EditRecord} />
+        <Route exact path="/persons/:personId/editRecord/:recordId" component={EditRecord} />
         <Route exact path="/persons/:personId/newRecord" component={NewRecord} />
         <Route path="*" component={NotFound}/>
       </Switch>
