@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router';
-import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+
+import KeyboardArrowLeftIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+
 import FlatButton from 'material-ui/FlatButton';
 
 import * as appActions from 'redux/actions/appActions';
@@ -72,7 +74,13 @@ class Person extends Component {
   }
 
   async onEditPersonClick() {
-    // stub
+    const {
+      match,
+      history,
+    } = this.props;
+
+    const personId = match.params.personId;
+    history.push(RouteUtil.getEditPersonRoute(personId));
   }
 
   async onDeleteRecordClick(recordId) {
@@ -84,7 +92,13 @@ class Person extends Component {
   }
 
   async onEditRecordClick(recordId) {
-    //stub
+    const {
+      match,
+      history,
+    } = this.props;
+
+    const personId = match.params.personId;
+    history.push(RouteUtil.getEditRecordRoute(personId, recordId));
   }
 
   render() {
@@ -111,7 +125,7 @@ class Person extends Component {
     return (
       <Shell
         title={person.name}
-        iconElementLeft={<KeyboardArrowLeft />}
+        iconElementLeft={<KeyboardArrowLeftIcon />}
         onLeftIconButtonClick={this.onBackButtonClick}
         iconElementRight={<FlatButton label={editing ? "done" : "edit"} />}
         onRightIconButtonClick={this.onEditPersonClick}

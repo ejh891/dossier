@@ -10,7 +10,6 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import DescriptionIcon from 'material-ui/svg-icons/action/description';
 import ModeEditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-
 import { red300, blue300 } from 'material-ui/styles/colors';
 
 export default (props) => {
@@ -36,7 +35,7 @@ export default (props) => {
               leftIcon={<ModeEditIcon color={blue300} />}
               onClick={() => { onEditClick(record._id); }}/>
             <MenuItem 
-              primaryText={`Shred ${record.key}`}
+              primaryText={`Delete ${record.key}`}
               leftIcon={<DeleteIcon color={red300} />}
               onClick={() => { onDeleteClick(record._id); }} />
           </IconMenu>

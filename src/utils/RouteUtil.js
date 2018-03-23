@@ -22,7 +22,11 @@ class RouteUtil {
     }
 
     static getEditRecordRoute(personId, recordId) {
-        return `/persons/${personId}/newRecord/${recordId}`;
+        return `/persons/${personId}/editRecord/${recordId}`;
+    }
+
+    static getEditPersonRoute(personId) {
+        return `/persons/editPerson/${personId}`;
     }
 }
 

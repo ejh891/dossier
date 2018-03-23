@@ -1,5 +1,5 @@
 import React from 'react';
-import Gradient from 'material-ui/svg-icons/image/gradient';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import { red300 } from 'material-ui/styles/colors';
 
 import FullScreenMessage from "./FullScreenMessage";
@@ -9,8 +9,8 @@ import './bouncing.css';
 export default (props) => {
     return (
         <FullScreenMessage
-            message="Shredding..."
-            icon={<Gradient className="bouncing" style={{ height: 60, width: 60, translate: 'rotate(90deg)' }} color={red300} />}
+            message="Deleting..."
+            icon={<DeleteIcon className="bouncing" style={{ height: 60, width: 60, translate: 'rotate(90deg)' }} color={red300} />}
         />
     );
 }

@@ -44,6 +44,20 @@ export function fetchPersonFailure(error) {
     }
 }
 
+export function deletePersonSuccess(personId) {
+    return {
+        type: Types.DELETE_PERSON_SUCCESS,
+        personId
+    }
+}
+
+export function deletePersonFailure(error) {
+    return {
+        type: Types.DELETE_PERSON_FAILURE,
+        error
+    }
+}
+
 export function fetchPersons() {
     return async (dispatch, getState) => {
         try {
@@ -78,6 +92,19 @@ export function fetchPerson(personId) {
             dispatch(fetchPersonSuccess(person));
         } catch (error) {
             dispatch(fetchPersonFailure(error));
+        }
+    }
+}
+
+export function deletePerson(personId) {
+    return async (dispatch, getState) => {
+        try {
+            dispatch(appActions.toggleDeleting(true));
+            const deletedPerson = await PersonService.delete(personId);
+
+            dispatch(deletePersonSuccess(deletedPerson._id));
+        } catch (error) {
+            dispatch(deletePersonFailure(error));
         }
     }
 }

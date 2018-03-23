@@ -55,6 +55,12 @@ export default (state = initialState, action) => {
         persons: [...state.persons, action.person],
         saving: false,
       }
+    case ActionTypes.DELETE_PERSON_SUCCESS:
+      return {
+        ...state,
+        persons: state.persons.filter(person => person._id !== action.personId),
+        deleting: false,
+      }
 
     case ActionTypes.ADD_RECORD_SUCCESS:
       person = findPerson(state.persons, action.record.personId);
@@ -90,6 +96,13 @@ export default (state = initialState, action) => {
       }
     case ActionTypes.DELETE_RECORD_FAILURE:
       console.error('Error deleting record', action.error);
+    
+      return {
+        ...state,
+        deleting: false,
+      }
+    case ActionTypes.DELETE_PERSON_FAILURE:
+      console.error('Error deleting person', action.error);
     
       return {
         ...state,
