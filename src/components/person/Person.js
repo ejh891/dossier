@@ -14,6 +14,7 @@ import PersonAvatar from 'components/shared/PersonAvatar';
 import FloatingAddButton from 'components/shared/floatingActionButtons/FloatingAddButton';
 import Records from 'components/records/Records';
 import NotFound from 'components/notFound/NotFound';
+import FloatingActionButtonBuffer from 'components/shared/floatingActionButtons/FloatingActionButtonBuffer';
 
 import RouteUtil from 'utils/RouteUtil';
 
@@ -125,6 +126,7 @@ class Person extends Component {
           onDeleteRecordClick={this.onDeleteRecordClick}
           onEditRecordClick={this.onEditRecordClick}
         />
+        <FloatingActionButtonBuffer />
         <FloatingAddButton onClick={() => { history.push(RouteUtil.getNewRecordRoute(personId))}} />
       </Shell>
     );

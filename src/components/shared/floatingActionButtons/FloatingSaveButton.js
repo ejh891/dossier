@@ -2,7 +2,7 @@ import React from 'react';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Save from 'material-ui/svg-icons/content/save';
-import * as style from './floatingActionButton.css';
+import * as style from './floatingActionButtonStyles';
 
 export default (props) => {
   return (

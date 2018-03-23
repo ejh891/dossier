@@ -6,7 +6,6 @@ import Subheader from 'material-ui/Subheader';
 
 import RecordRow from './RecordRow';
 import RecordFolderRow from './RecordFolderRow';
-import FloatingActionButtonBuffer from 'components/shared/floatingActionButtons/FloatingActionButtonBuffer';
 
 import FileSystem from 'lib/FileSystem';
 
@@ -61,7 +60,6 @@ export default (props) => {
           })}
         </List>
       }
-      <FloatingActionButtonBuffer />
     </div>
   );
 }

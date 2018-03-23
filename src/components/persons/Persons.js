@@ -6,6 +6,7 @@ import List from 'material-ui/List/List';
 import Shell from 'components/shared/Shell';
 import PersonRow from './PersonRow';
 import FloatingAddButton from 'components/shared/floatingActionButtons/FloatingAddButton';
+import FloatingActionButtonBuffer from 'components/shared/floatingActionButtons/FloatingActionButtonBuffer';
 
 class Persons extends Component {
   render() {
@@ -33,6 +34,7 @@ class Persons extends Component {
             );
           })}
         </List>
+        <FloatingActionButtonBuffer />
         <FloatingAddButton onClick={() => { history.push(newPersonPath)} } />
       </Shell>
     );

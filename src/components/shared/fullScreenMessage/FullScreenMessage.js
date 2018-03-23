@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Shell from 'components/shared/Shell';
-import { appBarHeight } from 'settings/style';
+import { appBarHeight } from 'settings/magicNumbers';
 
 export default (props) => {
   const {

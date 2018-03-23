@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 
-import { appBarHeight } from 'settings/style';
+import { appBarHeight } from 'settings/magicNumbers';
 
 class Shell extends Component {
   render() {
@@ -29,7 +29,7 @@ class Shell extends Component {
             right: 0,
           }}
         />
-        <div style={{ marginTop: appBarHeight }}>
+        <div style={{ marginTop: appBarHeight, overflowY: 'scroll' }}>
           {this.props.children}
         </div>
       </div>
