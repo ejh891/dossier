@@ -29,7 +29,11 @@ class Shell extends Component {
             right: 0,
           }}
         />
-        <div style={{ marginTop: appBarHeight, overflowY: 'scroll' }}>
+        <div style={{
+          marginTop: appBarHeight,
+          overflowY: 'scroll',
+          overflowX: 'hidden'
+        }}>
           {this.props.children}
         </div>
       </div>
