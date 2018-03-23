@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 
-import { appBarHeight } from 'settings/magicNumbers';
+import { appBarBufferHeight } from 'settings/magicNumbers';
 
 class Shell extends Component {
   render() {
@@ -30,7 +30,7 @@ class Shell extends Component {
           }}
         />
         <div style={{
-          marginTop: appBarHeight,
+          paddingTop: appBarBufferHeight,
           overflowY: 'scroll',
           overflowX: 'hidden'
         }}>

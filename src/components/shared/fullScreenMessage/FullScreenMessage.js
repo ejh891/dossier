@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Shell from 'components/shared/Shell';
-import { appBarHeight } from 'settings/magicNumbers';
+import { appBarBufferHeight } from 'settings/magicNumbers';
 
-export default (props) => {
+const FullScreenMessage = (props) => {
   const {
     message,
     icon
@@ -12,7 +12,7 @@ export default (props) => {
   return (
     <Shell>
       <div style={{
-        height: `calc(100vh - ${appBarHeight}px)`,
+        height: `calc(100vh - ${appBarBufferHeight}px)`,
         width: '100vw',
         display: 'flex',
         justifyContent: 'center',
@@ -26,3 +26,5 @@ export default (props) => {
     </Shell>
   );
 }
+
+export default FullScreenMessage;

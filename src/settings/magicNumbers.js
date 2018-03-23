@@ -2,7 +2,9 @@ import { floatingActionButton } from 'components/shared/floatingActionButtons/fl
 
 const bodyMargin = 8; // from app.css
 
-export const appBarHeight = 70;
+const appBarHeight = 64; // found from inspecting dom
+
+export const appBarBufferHeight = appBarHeight - bodyMargin;
 
 // how far the top of a FAB will be from the bottom of the screen
 // used to create a buffer on the bottom of the screen so that components can be scrolled above the FAB
