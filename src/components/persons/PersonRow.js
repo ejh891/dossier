@@ -16,12 +16,34 @@ export default (props) => {
   const {
     person,
     onClick,
+    showMoreOptions = true,
     onDeleteClick,
     onEditClick,
   } = props;
 
   const nRecords = person.records.length;
   const subtitle = `${nRecords} record${nRecords === 1 ? '' : 's'}`;
+
+  let moreOptionsIconMenu = null;
+  if (showMoreOptions) {
+    moreOptionsIconMenu = (
+      <IconMenu
+        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+        anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+        targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
+        useLayerForClickAway={true} // the popover will render on top of an invisible layer, which will prevent clicks to the underlying elements
+      >
+        <MenuItem
+          primaryText={`Edit ${person.name}`}
+          leftIcon={<ModeEditIcon color={blue300} />}
+          onClick={() => { onEditClick(person._id); }}/>
+        <MenuItem 
+          primaryText={`Delete ${person.name}`}
+          leftIcon={<DeleteIcon color={red300} />}
+          onClick={() => { onDeleteClick(person._id); }} />
+      </IconMenu>
+    );
+  }
 
   return (
     <ListItem
@@ -30,21 +52,7 @@ export default (props) => {
       leftAvatar={<PersonAvatar person={person} style={{ marginRight: '10px' }} />}
       primaryText={person.name}
       secondaryText={subtitle}
-      rightIconButton={<IconMenu
-            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
-            useLayerForClickAway={true} // the popover will render on top of an invisible layer, which will prevent clicks to the underlying elements
-          >
-            <MenuItem
-              primaryText={`Edit ${person.name}`}
-              leftIcon={<ModeEditIcon color={blue300} />}
-              onClick={() => { onEditClick(person._id); }}/>
-            <MenuItem 
-              primaryText={`Delete ${person.name}`}
-              leftIcon={<DeleteIcon color={red300} />}
-              onClick={() => { onDeleteClick(person._id); }} />
-          </IconMenu>}
+      rightIconButton={moreOptionsIconMenu}
     />
   );
 }

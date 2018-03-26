@@ -11,6 +11,7 @@ import Deleting from 'components/shared/fullScreenMessage/Deleting';
 
 import Persons from 'components/persons/Persons';
 import Person from 'components/person/Person';
+import Search from 'components/search/Search';
 import NewPerson from 'components/newPerson/NewPerson';
 import EditPerson from 'components/editPerson/EditPerson';
 import Record from 'components/record/Record';
@@ -54,15 +55,19 @@ class App extends Component {
       <Switch>
         <Route exact path="/" component={Persons} />
         <Route exact path="/persons" component={Persons} />
+        <Route exact path="/search" component={Search} />
+
+        <Route exact path="/newPerson" component={NewPerson} />
 
         <Route exact path="/persons/:personId" component={Person} />
         <Route path="/persons/:personId/records" component={Person} />
 
-        <Route exact path="/newPerson" component={NewPerson} />
-        <Route exact path="/persons/editPerson/:personId" component={EditPerson} />
         <Route exact path="/persons/:personId/records/:recordId" component={Record} />
         <Route exact path="/persons/:personId/editRecord/:recordId" component={EditRecord} />
         <Route exact path="/persons/:personId/newRecord" component={NewRecord} />
+        
+        <Route exact path="/persons/editPerson/:personId" component={EditPerson} />
+
         <Route path="*" component={NotFound}/>
       </Switch>
     );

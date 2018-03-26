@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router';
 
 import List from 'material-ui/List/List';
+import SearchIcon from 'material-ui/svg-icons/action/search';
 
 import Shell from 'components/shared/Shell';
 import PersonRow from './PersonRow';
@@ -50,7 +51,10 @@ class Persons extends Component {
     const newPersonPath = '/newPerson';
     
     return (
-      <Shell>
+      <Shell
+        iconElementRight={<SearchIcon />}
+        onRightIconButtonClick={() => { history.push('/search'); }}
+      >
         <List>
           {this.props.persons.map(person => {
             return (

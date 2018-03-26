@@ -19,7 +19,7 @@ class Shell extends Component {
         <AppBar
           iconElementLeft={<IconButton>{iconElementLeft}</IconButton>}
           onLeftIconButtonClick={onLeftIconButtonClick}
-          iconElementRight={iconElementRight}
+          iconElementRight={<IconButton>{iconElementRight}</IconButton>}
           onRightIconButtonClick={onRightIconButtonClick}
           title={title}
           style={{

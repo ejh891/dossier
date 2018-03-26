@@ -146,6 +146,13 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
+          // Process any webworkers
+          {
+            test: /\.worker\.js$/,
+            use: { 
+              loader: require.resolve('worker-loader'),
+            }
+          },
           // Process JS with Babel.
           {
             test: /\.(js|jsx|mjs)$/,

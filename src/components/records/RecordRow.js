@@ -15,31 +15,39 @@ import { red300, blue300 } from 'material-ui/styles/colors';
 export default (props) => {
     const {
         record,
+        onClick,
+        showMoreOptions = true,
         onDeleteClick,
         onEditClick,
     } = props;
 
+    let moreOptionsIconMenu = null;
+    if (showMoreOptions) {
+      moreOptionsIconMenu = (
+        <IconMenu
+          iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+          anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+          targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
+          useLayerForClickAway={true} // the popover will render on top of an invisible layer, which will prevent clicks to the underlying elements
+        >
+          <MenuItem
+            primaryText={`Edit ${record.key}`}
+            leftIcon={<ModeEditIcon color={blue300} />}
+            onClick={() => { onEditClick(record._id); }}/>
+          <MenuItem 
+            primaryText={`Delete ${record.key}`}
+            leftIcon={<DeleteIcon color={red300} />}
+            onClick={() => { onDeleteClick(record._id); }} />
+        </IconMenu>
+      );
+    }
+
     return (
       <ListItem
         key={record._id}
+        onClick={onClick}
         leftAvatar={<Avatar icon={<DescriptionIcon />} backgroundColor={blue300} />}
-        rightIconButton={
-          <IconMenu
-            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-            anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-            targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
-            useLayerForClickAway={true} // the popover will render on top of an invisible layer, which will prevent clicks to the underlying elements
-          >
-            <MenuItem
-              primaryText={`Edit ${record.key}`}
-              leftIcon={<ModeEditIcon color={blue300} />}
-              onClick={() => { onEditClick(record._id); }}/>
-            <MenuItem 
-              primaryText={`Delete ${record.key}`}
-              leftIcon={<DeleteIcon color={red300} />}
-              onClick={() => { onDeleteClick(record._id); }} />
-          </IconMenu>
-        }
+        rightIconButton={moreOptionsIconMenu}
         primaryText={record.key}
         secondaryText={record.value}
       />   

@@ -5,8 +5,6 @@ import { Redirect } from 'react-router';
 
 import KeyboardArrowLeftIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 
-import FlatButton from 'material-ui/FlatButton';
-
 import * as appActions from 'redux/actions/appActions';
 import * as personActions from 'redux/actions/personActions';
 import * as recordActions from 'redux/actions/recordActions';
@@ -37,29 +35,9 @@ class Person extends Component {
   onBackButtonClick() {
     const {
       history,
-      editing,
-      appActions,
     } = this.props;
 
-    // if editing, exit editing
-    if (editing) {
-      appActions.toggleEditing(false);
-    }
-
-    let currentURL = history.location.pathname;
-    if (currentURL.endsWith('/')) {
-      currentURL = currentURL.slice(0, -1);
-    }
-
-    // split, remove last path, re-join
-    const newURL = currentURL.split('/').slice(0, -1).join('/');
-
-    // if we hit back at the root directory, go to persons
-    if (newURL.indexOf('records') === -1) {
-      history.push('/persons');
-    } else {
-      history.push(newURL);
-    }
+    history.goBack();
   }
 
   onFolderClick(directory) {
@@ -106,7 +84,6 @@ class Person extends Component {
       match,
       history,
       persons,
-      editing,
     } = this.props;
 
     if (!match.url.includes('records')) {
@@ -127,8 +104,6 @@ class Person extends Component {
         title={person.name}
         iconElementLeft={<KeyboardArrowLeftIcon />}
         onLeftIconButtonClick={this.onBackButtonClick}
-        iconElementRight={<FlatButton label={editing ? "done" : "edit"} />}
-        onRightIconButtonClick={this.onEditPersonClick}
       >
         <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
           <PersonAvatar person={person} size={80} />
@@ -150,7 +125,6 @@ class Person extends Component {
 function mapStateToProps(state) {
   return {
     persons: state.persons,
-    editing: state.editing,
   };
 }
 

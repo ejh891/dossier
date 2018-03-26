@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TextField from 'material-ui/TextField';
-import KeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import KeyboardArrowLeftIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 
 import * as personActions from 'redux/actions/personActions';
 import Shell from 'components/shared/Shell';
@@ -48,7 +48,7 @@ class NewPerson extends Component {
     return (
       <Shell
         title="New Person of Interest"
-        iconElementLeft={<KeyboardArrowLeft />}
+        iconElementLeft={<KeyboardArrowLeftIcon />}
         onLeftIconButtonClick={history.goBack}
       >
         <TextField
