@@ -9,8 +9,8 @@ import Subheader from 'material-ui/Subheader';
 
 import FuzzySearchWorker from './fuzzySearch.worker';
 
-import PersonRow from 'components/persons/PersonRow';
-import RecordRow from 'components/records/RecordRow';
+import PersonSearchResult from './personSearchResult';
+import RecordSearchResult from './recordSearchResult';
 
 import Shell from 'components/shared/Shell';
 
@@ -69,7 +69,8 @@ class Search extends Component {
 
   render() {
     const {
-      history
+      history,
+      persons,
     } = this.props;
 
     const {
@@ -83,22 +84,24 @@ class Search extends Component {
         iconElementLeft={<HomeIcon />}
         onLeftIconButtonClick={() => { history.push('/persons'); }}
       >
+      <div style={{ marginTop: 20 }}>
         <SearchBar 
           onChange={this.onSearch}
           onRequestSearch={this.onSearch}
-          style={{ marginTop: 20 }}
         />
+      </div>
         {personResults.length > 0 &&
           <div>
             <List>
               <Subheader>People</Subheader>
-              {personResults.map(person => {
+              {personResults.map(personResult => {
+                const person = personResult.person
                 return (
-                  <PersonRow
+                  <PersonSearchResult
                     key={`search-result-${person._id}`}
                     person={person}
+                    searchMatch={personResult.match}
                     onClick={() => { this.props.history.push(`/persons/${person._id}`)}}
-                    showMoreOptions={false}
                   />
                 );
               })}
@@ -109,13 +112,15 @@ class Search extends Component {
         {recordResults.length > 0 &&
           <List>
             <Subheader>Records</Subheader>
-            {recordResults.map(record => {
+            {recordResults.map(recordResult => {
+              const record = recordResult.record;
               return (
-                <RecordRow
+                <RecordSearchResult
                   key={`search-result-${record._id}`}
+                  person={persons.find(person => person._id === record.personId)}
                   record={record}
+                  searchMatch={recordResult.match}
                   onClick={() => { this.props.history.push(`/persons/${record.personId}`)}}
-                  showMoreOptions={false}
                 />
               );
             })}

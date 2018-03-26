@@ -47,7 +47,6 @@ export default (props) => {
 
   return (
     <ListItem
-      key={person._id}
       onClick={onClick}
       leftAvatar={<PersonAvatar person={person} style={{ marginRight: '10px' }} />}
       primaryText={person.name}

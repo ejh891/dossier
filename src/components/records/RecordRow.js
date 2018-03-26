@@ -44,7 +44,6 @@ export default (props) => {
 
     return (
       <ListItem
-        key={record._id}
         onClick={onClick}
         leftAvatar={<Avatar icon={<DescriptionIcon />} backgroundColor={blue300} />}
         rightIconButton={moreOptionsIconMenu}
