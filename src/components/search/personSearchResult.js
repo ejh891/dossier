@@ -56,8 +56,8 @@ export default (props) => {
     return (
       <ListItem
         onClick={onClick}
-        leftAvatar={<PersonAvatar person={person} style={{ marginRight: '10px' }} />}
+        leftAvatar={<PersonAvatar person={person} />}
         primaryText={highlightedText}
-      />   
+      />
     );
 }

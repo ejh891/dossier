@@ -37,7 +37,7 @@ export default (props) => {
           primaryText={`Edit ${person.name}`}
           leftIcon={<ModeEditIcon color={blue300} />}
           onClick={() => { onEditClick(person._id); }}/>
-        <MenuItem 
+        <MenuItem
           primaryText={`Delete ${person.name}`}
           leftIcon={<DeleteIcon color={red300} />}
           onClick={() => { onDeleteClick(person._id); }} />
@@ -48,7 +48,7 @@ export default (props) => {
   return (
     <ListItem
       onClick={onClick}
-      leftAvatar={<PersonAvatar person={person} style={{ marginRight: '10px' }} />}
+      leftAvatar={<PersonAvatar person={person} size={40} />}
       primaryText={person.name}
       secondaryText={subtitle}
       rightIconButton={moreOptionsIconMenu}

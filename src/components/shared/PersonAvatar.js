@@ -10,13 +10,11 @@ const PersonAvatar = (props) => {
     person,
     size = 40,
     backgroundColor,
-    style,
+    style, // material-ui/ListItem passes a style prop to its LeftAvatar prop component
   } = props;
 
-  // if avatar is an Avatar or other element, it will be rendered. If avatar is a string, it will be used as the image src for an Avatar.
-  // ref: http://www.material-ui.com/#/components/card
   if (person.profilePhotoURL && person.profilePhotoURL !== '') {
-    return (<Avatar src={person.profilePhotoURL} size={size} />);
+    return (<Avatar src={person.profilePhotoURL} size={size} style={style} />);
   } else {
     const nameParts = person.name.split(' ');
     const initials = nameParts
@@ -24,7 +22,7 @@ const PersonAvatar = (props) => {
       .reduce((acc, letter) => { return acc + letter; }, '') // reduce to a string
       .slice(0, 2); // take the first 2 letters
 
-    return (<Avatar size={size} backgroundColor={backgroundColor || sample(colors)} style={style}>{initials}</Avatar>);
+    return (<Avatar size={size} style={style} backgroundColor={backgroundColor || sample(colors)}>{initials}</Avatar>);
   }
 }
 
