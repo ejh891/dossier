@@ -31,11 +31,11 @@ export default (props) => {
           useLayerForClickAway={true} // the popover will render on top of an invisible layer, which will prevent clicks to the underlying elements
         >
           <MenuItem
-            primaryText={`Edit ${record.key}`}
+            primaryText={`Edit ${record.title}`}
             leftIcon={<ModeEditIcon color={blue300} />}
             onClick={() => { onEditClick(record._id); }}/>
-          <MenuItem 
-            primaryText={`Delete ${record.key}`}
+          <MenuItem
+            primaryText={`Delete ${record.title}`}
             leftIcon={<DeleteIcon color={red300} />}
             onClick={() => { onDeleteClick(record._id); }} />
         </IconMenu>
@@ -47,8 +47,8 @@ export default (props) => {
         onClick={onClick}
         leftAvatar={<Avatar icon={<DescriptionIcon />} backgroundColor={blue300} />}
         rightIconButton={moreOptionsIconMenu}
-        primaryText={record.key}
-        secondaryText={record.value}
-      />   
+        primaryText={record.title}
+        secondaryText={record.notes}
+      />
     );
 }

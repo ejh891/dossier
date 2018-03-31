@@ -23,12 +23,12 @@ self.addEventListener('message', (event) => {
         match: el
       }
     });
-  
+
     const recordResults = fuzzy.filter(query, records, {
       pre: '<',
       post: '>',
       extract: (record) => {
-        return `${record.key}: ${record.value}`
+        return `${record.title}: ${record.notes}`
       }
     }).map(el => {
       return {
