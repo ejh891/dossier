@@ -1,7 +1,10 @@
 
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
-import uuidv4 from 'uuid/v4';
+
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ClearIcon from 'material-ui/svg-icons/content/clear';
+import { red300 } from 'material-ui/styles/colors';
 
 class ImageInput extends Component {
   constructor(props) {
@@ -28,11 +31,19 @@ class ImageInput extends Component {
     const {
       placeholder,
       imagePreviewURL,
+      onRemoveImage,
       height,
       width,
     } = this.props;
 
-    const wrapperStyle = { display: 'flex', justifyContent: 'center', alignItems: 'center', height, width };
+    const wrapperStyle = {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      border: '1px dashed rgba(0,0,0,0.3)',
+      height,
+      width
+    };
 
     if (!imagePreviewURL) {
       return (
@@ -41,17 +52,26 @@ class ImageInput extends Component {
           accept="image/jpeg, image/png"
           multiple={false} // only 1 file at a time
           onDrop={this.onAddImage}
-          style={{
-            ...wrapperStyle,
-            border: '1px dashed rgba(0,0,0,0.3)',
-          }}
+          style={wrapperStyle}
         >
           {placeholder}
         </Dropzone>
       );
     } else {
       return (
-        <div style={wrapperStyle}>
+        <div style={{
+            ...wrapperStyle,
+            position: 'relative'
+          }}
+        >
+          <FloatingActionButton
+            mini={true}
+            backgroundColor={red300}
+            style={{ position: 'absolute', top: -15, right: -15 }}
+            onClick={onRemoveImage}
+          >
+            <ClearIcon/>
+          </FloatingActionButton>
           <img src={imagePreviewURL} alt="File input preview" style={{ maxHeight: height, maxWidth: width }} />
         </div>
       );

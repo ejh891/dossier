@@ -23,6 +23,7 @@ class NewPerson extends Component {
 
     this.onTextFieldChange = this.onTextFieldChange.bind(this);
     this.onAddImage = this.onAddImage.bind(this);
+    this.onRemoveImage = this.onRemoveImage.bind(this);
     this.savePerson = this.savePerson.bind(this);
   }
 
@@ -90,6 +91,7 @@ class NewPerson extends Component {
         <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 20 }}>
           <ImageInput
             onAddImage={this.onAddImage}
+            onRemoveImage={this.onRemoveImage}
             placeholder={<IconButton><AddPhotoIcon color={'rgba(0,0,0,0.3)'}/></IconButton>}
             imagePreviewURL={imagePreviewURL}
             width={150}
