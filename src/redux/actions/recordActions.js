@@ -16,10 +16,23 @@ export function addRecordFailure(error) {
   }
 }
 
-export function deleteRecordSuccess(personId, recordId) {
+export function editRecordSuccess(record) {
+  return {
+    type: Types.EDIT_RECORD_SUCCESS,
+    record
+  }
+}
+
+export function editRecordFailure(error) {
+  return {
+    type: Types.EDIT_RECORD_FAILURE,
+    error
+  }
+}
+
+export function deleteRecordSuccess(recordId) {
   return {
     type: Types.DELETE_RECORD_SUCCESS,
-    personId,
     recordId,
   }
 }
@@ -42,6 +55,26 @@ export function addRecord(record) {
       dispatch(addRecordSuccess(newRecord));
     } catch (error) {
       dispatch(addRecordFailure(error));
+    }
+  }
+}
+
+export function editRecord(recordId, record) {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(appActions.toggleSaving(true));
+
+      // if imageURL is undefined, update will treat it as if it was unchanged
+      // this can be removed once the server handles it better
+      if (record.imageURL === undefined) {
+        record.imageURL = '';
+      }
+
+      const editedRecord = await RecordService.edit(recordId, record);
+
+      dispatch(editRecordSuccess(editedRecord));
+    } catch (error) {
+      dispatch(editRecordFailure(error));
     }
   }
 }

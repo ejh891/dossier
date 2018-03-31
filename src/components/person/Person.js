@@ -108,7 +108,7 @@ class Person extends Component {
         iconElementRight={<ModeEditIcon />}
         onRightIconButtonClick={this.onEditPersonClick}
       >
-        <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
+        <div style={{marginTop: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
           <PersonAvatar person={person} size={80} />
         </div>
         <Records

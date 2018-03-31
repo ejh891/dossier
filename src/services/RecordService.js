@@ -30,7 +30,7 @@ class RecordService {
         record
       }
     };
-    
+
     const response = await fetch(`${Hosts.dossierDBHost}/api/v${apiVersion}/records`, {
       method: 'POST',
       headers: {
@@ -38,6 +38,34 @@ class RecordService {
       },
       body: JSON.stringify(payload)
     });
+    const json = await response.json();
+
+    if (!response.ok) {
+      throw new Error(json);
+    }
+
+    return json.data.record;
+  }
+
+  static async edit(id, record, options = {}) {
+    const {
+      apiVersion = 1
+    } = options;
+
+    const payload = {
+      data: {
+        record
+      }
+    };
+
+    const response = await fetch(`${Hosts.dossierDBHost}/api/v${apiVersion}/records/${id}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
     const json = await response.json();
 
     if (!response.ok) {

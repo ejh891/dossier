@@ -64,13 +64,7 @@ export default (state = initialState, action) => {
     case ActionTypes.EDIT_PERSON_SUCCESS:
       return {
         ...state,
-        persons: state.persons.map(person => {
-          if (person._id === action.person._id) {
-            return action.person;
-          } else {
-            return person;
-          }
-        }),
+        persons: replacePerson(state.persons, action.person),
         saving: false,
       }
     case ActionTypes.DELETE_PERSON_SUCCESS:
@@ -120,6 +114,21 @@ export default (state = initialState, action) => {
         persons: replacePerson(state.persons, person),
         saving: false,
       }
+    case ActionTypes.EDIT_RECORD_SUCCESS:
+      person = findPerson(state.persons, action.record.personId);
+      person.records = person.records.map(record => {
+        if (record._id === action.record._id) {
+          return action.record;
+        } else {
+          return record;
+        }
+      });
+
+      return {
+        ...state,
+        persons: replacePerson(state.persons, person),
+        saving: false,
+      }
     case ActionTypes.DELETE_RECORD_SUCCESS:
       person = findPerson(state.persons, action.personId);
       person.records = person.records.filter(record => record._id !== action.recordId);
@@ -130,6 +139,13 @@ export default (state = initialState, action) => {
         deleting: false,
       }
     case ActionTypes.ADD_RECORD_FAILURE:
+      console.error('Error saving record', action.error);
+
+      return {
+        ...state,
+        saving: false,
+      }
+    case ActionTypes.EDIT_RECORD_FAILURE:
       console.error('Error saving record', action.error);
 
       return {

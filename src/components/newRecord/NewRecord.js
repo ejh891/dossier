@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
-import Subheader from 'material-ui/Subheader'
 import IconButton from 'material-ui/IconButton'
 import KeyboardArrowLeftIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import AddPhotoIcon from 'material-ui/svg-icons/image/add-a-photo';
@@ -22,7 +21,6 @@ class NewRecord extends Component {
     this.state = {
       title: '',
       notes: '',
-      path: '',
       imageURL: '',
     };
 
@@ -58,16 +56,6 @@ class NewRecord extends Component {
     } = this.props;
 
     const personId = match.params.personId;
-
-    let path = this.state.path;
-
-    if (!path.startsWith('/')) {
-      path = '/' + path;
-    }
-
-    if (!path.endsWith('/')) {
-      path = path + '/';
-    }
 
     const record = {
       title: this.state.title,
@@ -107,7 +95,7 @@ class NewRecord extends Component {
         iconElementLeft={<KeyboardArrowLeftIcon />}
         onLeftIconButtonClick={history.goBack}
       >
-        <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
+        <div style={{marginTop: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
           <PersonAvatar person={person} size={80} />
         </div>
         <TextField
