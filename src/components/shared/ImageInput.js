@@ -1,11 +1,19 @@
 
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as uploadActions from 'redux/actions/uploadActions';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
-import { red300 } from 'material-ui/styles/colors';
+import UploadIcon from 'material-ui/svg-icons/file/cloud-upload';
+import { blue300, red300 } from 'material-ui/styles/colors';
+
 import FirebaseService from 'services/FirebaseService';
+
+import 'css/bouncing.css';
 
 class ImageInput extends Component {
   constructor(props) {
@@ -16,6 +24,7 @@ class ImageInput extends Component {
     };
 
     this.onAddImage = this.onAddImage.bind(this);
+    this.onRemoveImage = this.onRemoveImage.bind(this);
   }
 
   async onAddImage(acceptedFiles, rejectedFiles) {
@@ -28,15 +37,27 @@ class ImageInput extends Component {
     // ref: https://react-dropzone.js.org/
     window.URL.revokeObjectURL(file.preview);
 
-    const url = await FirebaseService.upload(file);
+    const url = await this.props.uploadActions.upload(file);
 
     this.props.onAddImage(url);
+  }
+
+  async onRemoveImage() {
+    const {
+      imagePreviewURL,
+      onRemoveImage,
+    } = this.props;
+
+    FirebaseService.deleteUpload(imagePreviewURL);
+
+    onRemoveImage();
   }
 
   render() {
     const {
       placeholder,
       imagePreviewURL,
+      uploading,
       onRemoveImage,
       height,
       width,
@@ -51,7 +72,31 @@ class ImageInput extends Component {
       width
     };
 
-    if (!imagePreviewURL) {
+    if (imagePreviewURL) {
+      return (
+        <div style={{
+            ...wrapperStyle,
+            position: 'relative'
+          }}
+        >
+          <FloatingActionButton
+            mini={true}
+            backgroundColor={red300}
+            style={{ position: 'absolute', top: -15, right: -15 }}
+            onClick={this.onRemoveImage}
+          >
+            <ClearIcon/>
+          </FloatingActionButton>
+          <img src={imagePreviewURL} alt="File input preview" style={{ maxHeight: height, maxWidth: width }} />
+        </div>
+      );
+    } else if (uploading) {
+      return (
+        <div style={wrapperStyle}>
+          <UploadIcon className="bouncing" style={{ height: 60, width: 60 }} color={blue300} />
+        </div>
+      );
+    } else {
       return (
         <Dropzone
           ref={(node) => { this.dropzoneRef = node; }}
@@ -63,27 +108,20 @@ class ImageInput extends Component {
           {placeholder}
         </Dropzone>
       );
-    } else {
-      return (
-        <div style={{
-            ...wrapperStyle,
-            position: 'relative'
-          }}
-        >
-          <FloatingActionButton
-            mini={true}
-            backgroundColor={red300}
-            style={{ position: 'absolute', top: -15, right: -15 }}
-            onClick={onRemoveImage}
-          >
-            <ClearIcon/>
-          </FloatingActionButton>
-          <img src={imagePreviewURL} alt="File input preview" style={{ maxHeight: height, maxWidth: width }} />
-        </div>
-      );
     }
   }
-
 }
 
-export default ImageInput;
+function mapStateToProps(state) {
+  return {
+    uploading: state.uploading,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    uploadActions: bindActionCreators(uploadActions, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImageInput);

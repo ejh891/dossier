@@ -20,3 +20,10 @@ export function toggleDeleting(deleting) {
         deleting,
     }
 }
+
+export function toggleUploading(uploading) {
+  return {
+      type: ActionTypes.TOGGLE_UPLOADING,
+      uploading,
+  }
+}

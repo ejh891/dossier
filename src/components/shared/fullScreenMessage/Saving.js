@@ -5,7 +5,7 @@ import { blue300 } from 'material-ui/styles/colors';
 import FullScreenMessage from "./FullScreenMessage";
 import Shell from 'components/shared/Shell';
 
-import './bouncing.css';
+import 'css/bouncing.css';
 
 const Saving = (props) => {
   return (

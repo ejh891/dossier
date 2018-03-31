@@ -66,13 +66,19 @@ class EditRecord extends Component {
       recordActions,
     } = this.props;
 
+    const {
+      title,
+      notes,
+      imageURL,
+    } = this.state;
+
     const personId = match.params.personId;
     const recordId = match.params.recordId;
 
     const record = {
-      title: this.state.title,
-      notes: this.state.notes,
-      imageURL: this.state.imageURL,
+      title,
+      notes,
+      imageURL,
       personId,
     };
 
@@ -147,7 +153,7 @@ class EditRecord extends Component {
 
 function mapStateToProps(state) {
   return {
-    persons: state.persons
+    persons: state.persons,
   };
 }
 

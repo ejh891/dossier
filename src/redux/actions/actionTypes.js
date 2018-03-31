@@ -3,6 +3,12 @@
 export const TOGGLE_EDITING = 'TOGGLE_EDITING';
 export const TOGGLE_SAVING = 'TOGGLE_SAVING';
 export const TOGGLE_DELETING = 'TOGGLE_DELETING';
+export const TOGGLE_UPLOADING = 'TOGGLE_UPLOADING';
+
+// upload
+
+export const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS';
+export const UPLOAD_FAILURE = 'UPLOAD_FAILURE';
 
 // persons
 

@@ -1,6 +1,7 @@
 import * as Types from './actionTypes';
 import * as appActions from './appActions';
 import PersonService from 'services/PersonService';
+import FirebaseService from 'services/FirebaseService';
 
 export function addPersonSuccess(person) {
     return {
@@ -135,8 +136,18 @@ export function deletePerson(personId) {
         try {
             dispatch(appActions.toggleDeleting(true));
             const deletedPerson = await PersonService.delete(personId);
-
             dispatch(deletePersonSuccess(deletedPerson._id));
+
+            // when the person is deleted, attempt to free up storage by deleting uploads associated with the person
+            // we don't wait for this to finish
+            if (deletedPerson.profilePhotoURL) {
+              FirebaseService.deleteUpload(deletedPerson.profilePhotoURL);
+            }
+            for (const record of deletedPerson.records) {
+              if (record.imageURL) {
+                FirebaseService.deleteUpload(record.imageURL);
+              }
+            }
         } catch (error) {
             dispatch(deletePersonFailure(error));
         }

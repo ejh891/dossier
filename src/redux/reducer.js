@@ -1,5 +1,6 @@
 import initialState from 'redux/initialState';
 import * as ActionTypes from 'redux/actions/actionTypes';
+import ImmutabilityUtil from 'utils/ImmutabilityUtil';
 
 function findPerson(persons, personId) {
   const person = persons.find(person => person._id === personId);
@@ -44,6 +45,12 @@ export default (state = initialState, action) => {
         ...state,
         // if a bool was supplied, use it. Otherwise, just toggle the existing value
         deleting: action.deleting !== undefined ? action.deleting : !state.deleting,
+      }
+    case ActionTypes.TOGGLE_UPLOADING:
+      return {
+        ...state,
+        // if a bool was supplied, use it. Otherwise, just toggle the existing value
+        uploading: action.uploading !== undefined ? action.uploading : !state.uploading,
       }
 
     /*
@@ -130,8 +137,8 @@ export default (state = initialState, action) => {
         saving: false,
       }
     case ActionTypes.DELETE_RECORD_SUCCESS:
-      person = findPerson(state.persons, action.personId);
-      person.records = person.records.filter(record => record._id !== action.recordId);
+      person = findPerson(state.persons, action.record.personId);
+      person.records = person.records.filter(record => record._id !== action.record._id);
 
       return {
         ...state,
@@ -160,6 +167,21 @@ export default (state = initialState, action) => {
         deleting: false,
       }
 
+    /*
+     * Upload reducer
+     */
+    case ActionTypes.UPLOAD_SUCCESS:
+      return {
+        ...state,
+        uploading: false,
+      }
+    case ActionTypes.UPLOAD_FAILURE:
+      console.error('Error uploading', action.error);
+
+      return {
+        ...state,
+        uploading: false,
+      }
     default:
       return state;
   }

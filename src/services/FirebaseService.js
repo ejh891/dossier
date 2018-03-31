@@ -1,6 +1,8 @@
 import firebase from 'firebase';
 import uuidv4 from 'uuid/v4';
 
+import Hosts from 'settings/hosts';
+
 const config = {
   apiKey: "AIzaSyA6jy_v2dWihiqrw-Jp_xcBr-f_jMLDjWY",
   authDomain: "dossier-953fe.firebaseapp.com",
@@ -12,7 +14,7 @@ const config = {
 
 firebase.initializeApp(config);
 
-const storageRef = firebase.storage().ref();
+const storageRef = firebase.storage().refFromURL(Hosts.googleCloudStorageBucket);
 
 class FirebaseService {
   static async upload(file) {
@@ -45,6 +47,12 @@ class FirebaseService {
         resolve(uploadTask.snapshot.downloadURL);
       });
     });
+  }
+
+  static async deleteUpload(url) {
+    const ref = firebase.storage().refFromURL(url);
+
+    ref.delete();
   }
 }
 

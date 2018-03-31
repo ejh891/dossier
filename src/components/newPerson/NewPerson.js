@@ -38,9 +38,14 @@ class NewPerson extends Component {
       history,
     } = this.props;
 
+    const {
+      name,
+      profilePhotoURL,
+    } = this.state;
+
     const person = {
-      name: this.state.name,
-      profilePhotoURL: this.state.profilePhotoURL,
+      name,
+      profilePhotoURL,
     };
 
     await this.props.personActions.addPerson(person);
@@ -100,7 +105,7 @@ class NewPerson extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    personActions: bindActionCreators(personActions, dispatch)
+    personActions: bindActionCreators(personActions, dispatch),
   };
 }
 

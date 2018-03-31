@@ -5,7 +5,7 @@ import { blue300 } from 'material-ui/styles/colors';
 import FullScreenMessage from "./FullScreenMessage";
 import Shell from 'components/shared/Shell';
 
-import './spinning.css';
+import 'css/spinning.css';
 
 const Loading = (props) => {
   return (

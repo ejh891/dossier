@@ -1,6 +1,7 @@
 import * as Types from './actionTypes';
 import * as appActions from './appActions';
 import RecordService from 'services/RecordService';
+import FirebaseService from 'services/FirebaseService';
 
 export function addRecordSuccess(record) {
   return {
@@ -30,10 +31,10 @@ export function editRecordFailure(error) {
   }
 }
 
-export function deleteRecordSuccess(recordId) {
+export function deleteRecordSuccess(record) {
   return {
     type: Types.DELETE_RECORD_SUCCESS,
-    recordId,
+    record,
   }
 }
 
@@ -84,8 +85,13 @@ export function deleteRecord(recordId) {
     try {
       dispatch(appActions.toggleDeleting(true));
       const deletedRecord = await RecordService.delete(recordId);
+      dispatch(deleteRecordSuccess(deletedRecord));
 
-      dispatch(deleteRecordSuccess(deletedRecord.personId, deletedRecord._id));
+      // when the record is deleted, attempt to free up storage by deleting uploads associated with the record
+      // we don't wait for this to finish
+      if (deletedRecord.imageURL) {
+        FirebaseService.deleteUpload(deletedRecord.imageURL);
+      }
     } catch (error) {
       dispatch(deleteRecordFailure(error));
     }

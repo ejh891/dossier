@@ -21,7 +21,7 @@ class NewRecord extends Component {
     this.state = {
       title: '',
       notes: '',
-      imageURL: '',
+      imageURL: undefined,
     };
 
     this.textFieldOnChange = this.textFieldOnChange.bind(this);
@@ -55,12 +55,18 @@ class NewRecord extends Component {
       recordActions,
     } = this.props;
 
+    const {
+      title,
+      notes,
+      imageURL,
+    } = this.state;
+
     const personId = match.params.personId;
 
     const record = {
-      title: this.state.title,
-      notes: this.state.notes,
-      imageURL: this.state.imageURL,
+      title,
+      notes,
+      imageURL,
       personId,
     };
 
@@ -128,7 +134,7 @@ class NewRecord extends Component {
 
 function mapStateToProps(state) {
   return {
-    persons: state.persons
+    persons: state.persons,
   };
 }
 

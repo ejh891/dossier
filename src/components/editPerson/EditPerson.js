@@ -12,7 +12,7 @@ import Shell from 'components/shared/Shell';
 import FloatingSaveButton from 'components/shared/floatingActionButtons/FloatingSaveButton';
 import ImageInput from 'components/shared/ImageInput';
 
-class NewPerson extends Component {
+class EditPerson extends Component {
   constructor(props) {
     super(props);
 
@@ -126,4 +126,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPerson);
+export default connect(mapStateToProps, mapDispatchToProps)(EditPerson);

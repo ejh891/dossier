@@ -14,6 +14,18 @@ class Hosts {
         throw new Error(`Unrecognized Environment: ${Environment.env}. Check Environments enum.`)
     }
   }
-} 
+
+  static get googleCloudStorageBucket() {
+    switch (Environment.env) {
+      case Environments.LOCAL:
+      case Environments.DEVELOPMENT:
+        return 'gs://dossier-uploads-test';
+      case Environments.PRODUCTION:
+        return 'gs://dossier-uploads';
+      default:
+        throw new Error(`Unrecognized Environment: ${Environment.env}. Check Environments enum.`)
+    }
+  }
+}
 
 export default Hosts;
