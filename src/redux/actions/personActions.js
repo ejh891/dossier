@@ -1,6 +1,7 @@
 import * as Types from './actionTypes';
 import * as appActions from './appActions';
 import PersonService from 'services/PersonService';
+import FirebaseService from 'services/FirebaseService';
 
 export function addPersonSuccess(person) {
     return {
@@ -70,12 +71,16 @@ export function fetchPersons() {
     }
 }
 
-export function addPerson(person) {
+export function addPerson(person, profilePhotoFile) {
     return async (dispatch, getState) => {
         try {
             dispatch(appActions.toggleSaving(true));
-            
-            const newPerson = await PersonService.add(person);
+
+            const uploadURL = await FirebaseService.uploadProfilePhoto(profilePhotoFile);
+            const newPerson = await PersonService.add({
+              name: person.name,
+              profilePhotoURL: uploadURL
+            });
 
             dispatch(addPersonSuccess(newPerson));
         } catch (error) {

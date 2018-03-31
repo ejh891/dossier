@@ -5,7 +5,7 @@ import sample from 'lodash.sample';
 
 const colors = [ red300, orange300, yellow300, green300, blue300, purple300 ];
 
-export default (props) => {
+const PersonAvatar = (props) => {
   const {
     person,
     size = 40,
@@ -27,3 +27,5 @@ export default (props) => {
     return (<Avatar size={size} backgroundColor={backgroundColor || sample(colors)} style={style}>{initials}</Avatar>);
   }
 }
+
+export default PersonAvatar;

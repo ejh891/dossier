@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TextField from 'material-ui/TextField';
+
+import IconButton from 'material-ui/IconButton'
 import KeyboardArrowLeftIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
-import Dropzone from 'react-dropzone';
-import FlatButton from 'material-ui/FlatButton'
+import AddPhotoIcon from 'material-ui/svg-icons/image/add-a-photo';
+
 import * as personActions from 'redux/actions/personActions';
 import Shell from 'components/shared/Shell';
 import FloatingSaveButton from 'components/shared/floatingActionButtons/FloatingSaveButton';
+import ImageInput from 'components/shared/ImageInput';
 
 class NewPerson extends Component {
   constructor(props) {
@@ -15,12 +18,11 @@ class NewPerson extends Component {
 
     this.state = {
       name: '',
-      file: null,
-      preview: null,
+      imageFile: null,
     };
 
     this.onTextFieldChange = this.onTextFieldChange.bind(this);
-    this.onAddPhoto = this.onAddPhoto.bind(this);
+    this.onAddImage = this.onAddImage.bind(this);
     this.savePerson = this.savePerson.bind(this);
   }
 
@@ -30,24 +32,42 @@ class NewPerson extends Component {
     });
   }
 
-  onAddPhoto(event, file) {
-    this.setState({
-      file: file
-    });
-  }
-
   async savePerson() {
     const {
       history,
     } = this.props;
 
     const person = {
-      name: this.state.name
+      name: this.state.name,
     };
 
-    await this.props.personActions.addPerson(person);
+    const profilePhotoFile = this.state.imageFile;
+
+    await this.props.personActions.addPerson(person, profilePhotoFile);
 
     history.goBack();
+  }
+
+  onAddImage(imageFile) {
+    this.setState({
+      imageFile,
+    })
+  }
+
+  onRemoveImage() {
+    if (this.state.imageFile) {
+      this.releaseFileURL(this.state.imageFile.preview);
+
+      this.setState({
+        imageFile: null
+      });
+    }
+  }
+
+  releaseFileURL(url) {
+    // avoid memory leaks by revoking object URL
+    // ref: https://react-dropzone.js.org/
+    window.URL.revokeObjectURL(url);
   }
 
   render() {
@@ -55,58 +75,40 @@ class NewPerson extends Component {
       history,
     } = this.props;
 
+    const {
+      imageFile
+    } = this.state;
+
+    const imagePreviewURL = imageFile ? imageFile.preview : null;
+
     return (
       <Shell
         title="New Person of Interest"
         iconElementLeft={<KeyboardArrowLeftIcon />}
         onLeftIconButtonClick={history.goBack}
       >
+        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 20 }}>
+          <ImageInput
+            onAddImage={this.onAddImage}
+            placeholder={<IconButton><AddPhotoIcon color={'rgba(0,0,0,0.3)'}/></IconButton>}
+            imagePreviewURL={imagePreviewURL}
+            width={150}
+            height={150}
+          />
+        </div>
         <TextField
           onChange={(event) => { this.onTextFieldChange('name', event); }}
           floatingLabelText="Name"
           fullWidth={true}
         />
-
-        <Dropzone
-          accept="image/jpeg, image/png"
-          multiple={false} // only 1 file at a time
-          style={{ border: 'none' }}
-          onDrop={(acceptedFiles, rejectedFiles) => {
-            acceptedFiles.forEach(file => {
-              const reader = new FileReader();
-                reader.onload = () => {
-                  this.setState({
-                    file: {
-                      preview: file.preview,
-                      binaryString: reader.result,
-                    }
-                  });
-                };
-                reader.onabort = () => console.log('file reading was aborted');
-                reader.onerror = () => console.log('file reading has failed');
-
-                reader.readAsBinaryString(file);
-              });
-          }}
-        >
-        <FlatButton
-          label="Choose an Image"
-          labelPosition="before"
-          containerElement="label"
-        >
-        </FlatButton>
-        </Dropzone>
-        <img src={this.state.file.preview} />
         <FloatingSaveButton onClick={this.savePerson}/>
       </Shell>
     );
   }
 
   componentWillUnmount() {
-    if (this.state.file) {
-      // avoid memory leaks by revoking object URL
-      // ref: https://react-dropzone.js.org/
-      window.URL.revokeObjectURL(this.state.file.preview);
+    if (this.state.imageFile) {
+      this.releaseFileURL(this.state.imageFile.preview);
     }
   }
 }

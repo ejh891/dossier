@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import uuidv4 from 'uuid/v4';
 
 const config = {
   apiKey: "AIzaSyA6jy_v2dWihiqrw-Jp_xcBr-f_jMLDjWY",
@@ -11,14 +12,13 @@ const config = {
 
 firebase.initializeApp(config);
 
-const profilePhotosBucketRef = firebase.storage("gs://dossier-profile-photos").ref();
-const recordAttachmentsBucket = firebase.storage("gs://dossier-record-attachments").ref();
+const storageRef = firebase.storage().ref();
 
 class FirebaseService {
-  async upload(file, ref) {
+  static async upload(file, ref) {
     const uploadTask = ref.put(file);
 
-    await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       // Register three observers:
       // 1. 'state_changed' observer, called any time the state changes
       // 2. Error observer, called on failure
@@ -45,7 +45,9 @@ class FirebaseService {
     });
   }
 
-  uploadProfilePhoto() {
+  static async uploadProfilePhoto(file) {
+    return FirebaseService.upload(file, storageRef.child(`profile-photos/${uuidv4()}`));
+  }
 
 }
 
