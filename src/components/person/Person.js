@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router';
 
 import KeyboardArrowLeftIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import ModeEditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 import * as appActions from 'redux/actions/appActions';
 import * as personActions from 'redux/actions/personActions';
@@ -23,7 +24,7 @@ class Person extends Component {
     super(props);
 
     this.onBackButtonClick = this.onBackButtonClick.bind(this);
-    
+
     this.onFolderClick = this.onFolderClick.bind(this);
 
     this.onEditPersonClick = this.onEditPersonClick.bind(this);
@@ -104,6 +105,8 @@ class Person extends Component {
         title={person.name}
         iconElementLeft={<KeyboardArrowLeftIcon />}
         onLeftIconButtonClick={this.onBackButtonClick}
+        iconElementRight={<ModeEditIcon />}
+        onRightIconButtonClick={this.onEditPersonClick}
       >
         <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px'}}>
           <PersonAvatar person={person} size={80} />
