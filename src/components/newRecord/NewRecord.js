@@ -69,6 +69,12 @@ class NewRecord extends Component {
       persons,
     } = this.props;
 
+    const {
+      key,
+      value,
+      path,
+    } = this.state;
+
     const personId = match.params.personId;
     const person = persons.find(person => person._id === personId);
 
@@ -89,16 +95,19 @@ class NewRecord extends Component {
           onChange={(event) => { this.textFieldOnChange('key', event); }}
           floatingLabelText="Title"
           fullWidth={true}
+          value={key}
         />
         <TextField
           onChange={(event) => { this.textFieldOnChange('value', event); }}
           floatingLabelText="Details"
           fullWidth={true}
+          value={value}
         />
         <TextField
           onChange={(event) => { this.textFieldOnChange('path', event); }}
           floatingLabelText="Folder (Optional)"
           fullWidth={true}
+          value={path}
         />
         <FloatingSaveButton onClick={this.saveRecord}/>
       </Shell>

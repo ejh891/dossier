@@ -1,7 +1,6 @@
 import * as Types from './actionTypes';
 import * as appActions from './appActions';
 import PersonService from 'services/PersonService';
-import FirebaseService from 'services/FirebaseService';
 
 export function addPersonSuccess(person) {
     return {
@@ -15,6 +14,20 @@ export function addPersonFailure(error) {
         type: Types.ADD_PERSON_FAILURE,
         error
     }
+}
+
+export function editPersonSuccess(person) {
+  return {
+      type: Types.EDIT_PERSON_SUCCESS,
+      person
+  }
+}
+
+export function editPersonFailure(error) {
+  return {
+      type: Types.EDIT_PERSON_FAILURE,
+      error
+  }
 }
 
 export function fetchPersonsSuccess(persons) {
@@ -71,22 +84,38 @@ export function fetchPersons() {
     }
 }
 
-export function addPerson(person, profilePhotoFile) {
+export function addPerson(person) {
     return async (dispatch, getState) => {
         try {
             dispatch(appActions.toggleSaving(true));
 
-            const uploadURL = await FirebaseService.uploadProfilePhoto(profilePhotoFile);
-            const newPerson = await PersonService.add({
-              name: person.name,
-              profilePhotoURL: uploadURL
-            });
+            const newPerson = await PersonService.add(person);
 
             dispatch(addPersonSuccess(newPerson));
         } catch (error) {
             dispatch(addPersonFailure(error));
         }
     }
+}
+
+export function editPerson(personId, person) {
+  return async (dispatch, getState) => {
+      try {
+          dispatch(appActions.toggleSaving(true));
+
+          // if profilePhotoURL is undefined, update will treat it as if it was unchanged
+          // this can be removed once the server handles it better
+          if (person.profilePhotoURL === undefined) {
+            person.profilePhotoURL = '';
+          }
+
+          const editedPerson = await PersonService.edit(personId, person);
+
+          dispatch(editPersonSuccess(editedPerson));
+      } catch (error) {
+          dispatch(editPersonFailure(error));
+      }
+  }
 }
 
 export function fetchPerson(personId) {

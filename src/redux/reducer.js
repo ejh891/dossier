@@ -24,6 +24,9 @@ function replacePerson(originalPersons, updatedPerson) {
 export default (state = initialState, action) => {
   let person;
   switch (action.type) {
+    /*
+     * App Reducer
+     */
     case ActionTypes.TOGGLE_EDITING:
       return {
         ...state,
@@ -43,6 +46,9 @@ export default (state = initialState, action) => {
         deleting: action.deleting !== undefined ? action.deleting : !state.deleting,
       }
 
+    /*
+     * Person Reducer
+     */
     case ActionTypes.FETCH_PERSONS_SUCCESS:
       return {
         ...state,
@@ -55,13 +61,56 @@ export default (state = initialState, action) => {
         persons: [...state.persons, action.person],
         saving: false,
       }
+    case ActionTypes.EDIT_PERSON_SUCCESS:
+      return {
+        ...state,
+        persons: state.persons.map(person => {
+          if (person._id === action.person._id) {
+            return action.person;
+          } else {
+            return person;
+          }
+        }),
+        saving: false,
+      }
     case ActionTypes.DELETE_PERSON_SUCCESS:
       return {
         ...state,
         persons: state.persons.filter(person => person._id !== action.personId),
         deleting: false,
       }
+    case ActionTypes.ADD_PERSON_FAILURE:
+      console.error('Error saving person', action.error);
 
+      return {
+        ...state,
+        saving: false,
+      }
+    case ActionTypes.EDIT_PERSON_FAILURE:
+      console.error('Error saving person', action.error);
+
+      return {
+        ...state,
+        saving: false,
+      }
+    case ActionTypes.DELETE_PERSON_FAILURE:
+      console.error('Error deleting person', action.error);
+
+      return {
+        ...state,
+        deleting: false,
+      }
+    case ActionTypes.FETCH_PERSONS_FAILURE:
+      console.error('Error deleting person', action.error);
+
+      return {
+        ...state,
+        initializing: false,
+      }
+
+    /*
+     * Record Reducer
+     */
     case ActionTypes.ADD_RECORD_SUCCESS:
       person = findPerson(state.persons, action.record.personId);
       person.records = [...person.records, action.record];
@@ -80,35 +129,21 @@ export default (state = initialState, action) => {
         persons: replacePerson(state.persons, person),
         deleting: false,
       }
-    case ActionTypes.ADD_PERSON_FAILURE:
-      console.error('Error saving person', action.error);
-        
-      return {
-        ...state,
-        saving: false,
-      }
     case ActionTypes.ADD_RECORD_FAILURE:
       console.error('Error saving record', action.error);
-      
+
       return {
         ...state,
         saving: false,
       }
     case ActionTypes.DELETE_RECORD_FAILURE:
       console.error('Error deleting record', action.error);
-    
+
       return {
         ...state,
         deleting: false,
       }
-    case ActionTypes.DELETE_PERSON_FAILURE:
-      console.error('Error deleting person', action.error);
-    
-      return {
-        ...state,
-        deleting: false,
-      }
-    case ActionTypes.FETCH_PERSONS_FAILURE:
+
     default:
       return state;
   }

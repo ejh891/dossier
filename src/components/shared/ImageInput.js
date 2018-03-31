@@ -5,6 +5,7 @@ import Dropzone from 'react-dropzone';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import { red300 } from 'material-ui/styles/colors';
+import FirebaseService from 'services/FirebaseService';
 
 class ImageInput extends Component {
   constructor(props) {
@@ -17,14 +18,19 @@ class ImageInput extends Component {
     this.onAddImage = this.onAddImage.bind(this);
   }
 
-  onAddImage(acceptedFiles, rejectedFiles) {
+  async onAddImage(acceptedFiles, rejectedFiles) {
     if (acceptedFiles.length !== 1) {
       throw new Error('Only one image can be added')
     }
 
     const file = acceptedFiles[0];
+    // avoid memory leaks by revoking object URL (we revoke immediately since we're not using the preview)
+    // ref: https://react-dropzone.js.org/
+    window.URL.revokeObjectURL(file.preview);
 
-    this.props.onAddImage(file);
+    const url = await FirebaseService.upload(file);
+
+    this.props.onAddImage(url);
   }
 
   render() {

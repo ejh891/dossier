@@ -18,7 +18,7 @@ class NewPerson extends Component {
 
     this.state = {
       name: '',
-      imageFile: null,
+      profilePhotoURL: undefined,
     };
 
     this.onTextFieldChange = this.onTextFieldChange.bind(this);
@@ -40,35 +40,24 @@ class NewPerson extends Component {
 
     const person = {
       name: this.state.name,
+      profilePhotoURL: this.state.profilePhotoURL,
     };
 
-    const profilePhotoFile = this.state.imageFile;
-
-    await this.props.personActions.addPerson(person, profilePhotoFile);
+    await this.props.personActions.addPerson(person);
 
     history.goBack();
   }
 
-  onAddImage(imageFile) {
+  onAddImage(profilePhotoURL) {
     this.setState({
-      imageFile,
+      profilePhotoURL,
     })
   }
 
   onRemoveImage() {
-    if (this.state.imageFile) {
-      this.releaseFileURL(this.state.imageFile.preview);
-
-      this.setState({
-        imageFile: null
-      });
-    }
-  }
-
-  releaseFileURL(url) {
-    // avoid memory leaks by revoking object URL
-    // ref: https://react-dropzone.js.org/
-    window.URL.revokeObjectURL(url);
+    this.setState({
+      profilePhotoURL: undefined
+    });
   }
 
   render() {
@@ -77,10 +66,9 @@ class NewPerson extends Component {
     } = this.props;
 
     const {
-      imageFile
+      name,
+      profilePhotoURL,
     } = this.state;
-
-    const imagePreviewURL = imageFile ? imageFile.preview : null;
 
     return (
       <Shell
@@ -93,7 +81,7 @@ class NewPerson extends Component {
             onAddImage={this.onAddImage}
             onRemoveImage={this.onRemoveImage}
             placeholder={<IconButton><AddPhotoIcon color={'rgba(0,0,0,0.3)'}/></IconButton>}
-            imagePreviewURL={imagePreviewURL}
+            imagePreviewURL={profilePhotoURL}
             width={150}
             height={150}
           />
@@ -102,16 +90,11 @@ class NewPerson extends Component {
           onChange={(event) => { this.onTextFieldChange('name', event); }}
           floatingLabelText="Name"
           fullWidth={true}
+          value={name}
         />
         <FloatingSaveButton onClick={this.savePerson}/>
       </Shell>
     );
-  }
-
-  componentWillUnmount() {
-    if (this.state.imageFile) {
-      this.releaseFileURL(this.state.imageFile.preview);
-    }
   }
 }
 

@@ -15,7 +15,9 @@ firebase.initializeApp(config);
 const storageRef = firebase.storage().ref();
 
 class FirebaseService {
-  static async upload(file, ref) {
+  static async upload(file) {
+    const ref = storageRef.child(uuidv4());
+
     const uploadTask = ref.put(file);
 
     return new Promise((resolve, reject) => {
@@ -44,11 +46,6 @@ class FirebaseService {
       });
     });
   }
-
-  static async uploadProfilePhoto(file) {
-    return FirebaseService.upload(file, storageRef.child(`profile-photos/${uuidv4()}`));
-  }
-
 }
 
 export default FirebaseService;
