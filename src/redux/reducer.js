@@ -1,6 +1,5 @@
 import initialState from 'redux/initialState';
 import * as ActionTypes from 'redux/actions/actionTypes';
-import ImmutabilityUtil from 'utils/ImmutabilityUtil';
 
 function findPerson(persons, personId) {
   const person = persons.find(person => person._id === personId);

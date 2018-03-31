@@ -58,7 +58,6 @@ class ImageInput extends Component {
       placeholder,
       imagePreviewURL,
       uploading,
-      onRemoveImage,
       height,
       width,
     } = this.props;
