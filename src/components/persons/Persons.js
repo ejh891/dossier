@@ -5,12 +5,14 @@ import { Redirect } from 'react-router';
 
 import List from 'material-ui/List/List';
 import SearchIcon from 'material-ui/svg-icons/action/search';
+import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 
 import Shell from 'components/shared/Shell';
 import PersonRow from './PersonRow';
 import FloatingAddButton from 'components/shared/floatingActionButtons/FloatingAddButton';
 import FloatingActionButtonBuffer from 'components/shared/floatingActionButtons/FloatingActionButtonBuffer';
 
+import * as appActions from 'redux/actions/appActions';
 import * as personActions from 'redux/actions/personActions';
 
 import RouteUtil from 'utils/RouteUtil';
@@ -42,6 +44,7 @@ class Persons extends Component {
     const {
       match,
       history,
+      appActions,
     } = this.props;
 
     if (!match.url.includes('persons')) {
@@ -49,9 +52,11 @@ class Persons extends Component {
   }
 
     const newPersonPath = '/newPerson';
-    
+
     return (
       <Shell
+        iconElementLeft={<MenuIcon />}
+        onLeftIconButtonClick={() => { appActions.toggleSideDrawerOpen(); }}
         iconElementRight={<SearchIcon />}
         onRightIconButtonClick={() => { history.push('/search'); }}
       >
@@ -84,6 +89,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    appActions: bindActionCreators(appActions, dispatch),
     personActions: bindActionCreators(personActions, dispatch),
   };
 }

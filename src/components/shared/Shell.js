@@ -3,6 +3,7 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 
 import { appBarBufferHeight } from 'settings/magicNumbers';
+import SideDrawer from 'components/shared/SideDrawer';
 
 class Shell extends Component {
   render() {
@@ -29,6 +30,7 @@ class Shell extends Component {
             right: 0,
           }}
         />
+        <SideDrawer />
         <div style={{
           paddingTop: appBarBufferHeight,
           overflowY: 'scroll',

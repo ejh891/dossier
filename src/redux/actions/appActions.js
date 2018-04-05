@@ -41,3 +41,10 @@ export function toggleAuthenticating(authenticating) {
       authenticating,
   }
 }
+
+export function toggleSideDrawerOpen(sideDrawerOpen) {
+  return {
+      type: ActionTypes.TOGGLE_SIDE_DRAWER_OPEN,
+      sideDrawerOpen,
+  }
+}

@@ -63,14 +63,22 @@ export default (state = initialState, action) => {
         // if a bool was supplied, use it. Otherwise, just toggle the existing value
         authenticating: action.authenticating !== undefined ? action.authenticating : !state.authenticating,
       }
-
+    case ActionTypes.TOGGLE_SIDE_DRAWER_OPEN:
+      return {
+        ...state,
+        // if a bool was supplied, use it. Otherwise, just toggle the existing value
+        sideDrawerOpen: action.sideDrawerOpen !== undefined ? action.sideDrawerOpen : !state.sideDrawerOpen,
+      }
     /*
      * Auth Reducer
      */
     case ActionTypes.SET_USER_SUCCESS:
+      if (!action.user) { // user has just logged out
+        return initialState;
+      }
+
       return {
         ...state,
-        // if a bool was supplied, use it. Otherwise, just toggle the existing value
         user: action.user,
       }
     case ActionTypes.SET_USER_FAILURE:
