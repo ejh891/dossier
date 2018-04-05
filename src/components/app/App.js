@@ -42,6 +42,8 @@ class App extends Component {
       initializing,
       saving,
       deleting,
+      authenticating,
+      user,
     } = this.props;
 
     if (initializing) {
@@ -62,17 +64,20 @@ class App extends Component {
       );
     }
 
-    if (deleting) {
+    if (authenticating) {
       return (
         <Authenticating />
       );
+    }
+
+    if (!user) {
+      return <SignIn />
     }
 
     return (
       <div>
         <Switch>
           <Route exact path="/" component={Persons} />
-          <Route exact path="/sign-in" component={SignIn} />
           <Route exact path="/persons" component={Persons} />
           <Route exact path="/search" component={Search} />
 
@@ -101,6 +106,7 @@ function mapStateToProps(state) {
     saving: state.saving,
     deleting: state.deleting,
     authenticating: state.authenticating,
+    user: state.user,
   };
 }
 

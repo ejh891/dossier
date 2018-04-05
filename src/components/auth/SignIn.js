@@ -28,9 +28,9 @@ class SignIn extends Component {
       user
     } = this.props;
 
-    // if (user !== null) {
-    //   return (<Redirect to={{pathname: '/'}}/>);
-    // }
+    if (user !== null) {
+      return (<Redirect to={{pathname: '/'}}/>);
+    }
 
     return (
       <Shell verticalAlign="center">
