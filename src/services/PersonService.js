@@ -3,10 +3,11 @@ import Hosts from 'settings/hosts';
 class PersonService {
   static async browse(options = {}) {
     const {
-      apiVersion = 1
+      apiVersion = 1,
+      userId
     } = options;
 
-    const response = await fetch(`${Hosts.dossierDBHost}/api/v${apiVersion}/persons`, { method: 'GET' });
+    const response = await fetch(`${Hosts.dossierDBHost}/api/v${apiVersion}/persons/?userId=${userId}`, { method: 'GET' });
     const json = await response.json();
 
     if (!response.ok) {

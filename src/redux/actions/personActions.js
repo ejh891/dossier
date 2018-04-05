@@ -76,8 +76,16 @@ export function deletePersonFailure(error) {
 export function fetchPersons() {
   return async (dispatch, getState) => {
     dispatch(appActions.toggleInitializing(true));
+
+    const stateSnapshot = getState();
+    const user = stateSnapshot.user;
+
+    if (!user) {
+      throw new Error('User must be logged in to fetch persons');
+    }
+
     try {
-      const persons = await PersonService.browse();
+      const persons = await PersonService.browse({ userId: user.id });
 
       dispatch(fetchPersonsSuccess(persons));
     } catch (error) {
@@ -88,10 +96,20 @@ export function fetchPersons() {
 
 export function addPerson(person) {
   return async (dispatch, getState) => {
+    const stateSnapshot = getState();
+    const user = stateSnapshot.user;
+
+    if (!user) {
+      throw new Error('User must be logged in to add a person');
+    }
+
     try {
       dispatch(appActions.toggleSaving(true));
 
-      const newPerson = await PersonService.add(person);
+      const newPerson = await PersonService.add({
+        ...person,
+        userId: user.id,
+      });
 
       dispatch(addPersonSuccess(newPerson));
     } catch (error) {
