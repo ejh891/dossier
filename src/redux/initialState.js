@@ -7,5 +7,4 @@ export default {
     persons: [],
     user: null,
     setUserError: null,
-    createUserError: null,
 }

@@ -80,22 +80,10 @@ export default (state = initialState, action) => {
         ...state,
         setUserError: action.error,
       }
-    case ActionTypes.CREATE_USER_FAILURE:
-      console.error('Error creating user', action.error);
-
-      return {
-        ...state,
-        createUserError: action.error,
-      }
     case ActionTypes.CLEAR_SET_USER_ERROR:
       return {
         ...state,
         setUserError: null,
-      }
-    case ActionTypes.CLEAR_CREATE_USER_ERROR:
-      return {
-        ...state,
-        createUserError: null,
       }
 
     /*
