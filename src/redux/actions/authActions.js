@@ -27,7 +27,6 @@ export const observeAuthState = () => {
   return (dispatch) => {
     firebaseAuth.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         dispatch(setUserSuccess({id: user.uid, name: user.displayName, photoURL: user.photoURL}));
       } else {
         dispatch(setUserSuccess(null));
@@ -42,8 +41,7 @@ export const logInUserViaFacebook = () => {
   return async (dispatch) => {
     dispatch(appActions.toggleAuthenticating(true));
 
-    const authResult = await firebaseAuth.signInWithPopup(firebaseFacebookAuthProvider);
-    console.log(authResult);
+    await firebaseAuth.signInWithPopup(firebaseFacebookAuthProvider);
   };
 };
 
