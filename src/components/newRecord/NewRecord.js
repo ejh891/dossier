@@ -24,13 +24,13 @@ class NewRecord extends Component {
       imageURL: undefined,
     };
 
-    this.textFieldOnChange = this.textFieldOnChange.bind(this);
+    this.onTextFieldChange = this.onTextFieldChange.bind(this);
     this.onAddImage = this.onAddImage.bind(this);
     this.onRemoveImage = this.onRemoveImage.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
   }
 
-  textFieldOnChange(field, event) {
+  onTextFieldChange(field, event) {
     this.setState({
       [field]: event.target.value
     });
@@ -105,13 +105,13 @@ class NewRecord extends Component {
           <PersonAvatar person={person} size={80} />
         </div>
         <TextField
-          onChange={(event) => { this.textFieldOnChange('title', event); }}
+          onChange={(event) => { this.onTextFieldChange('title', event); }}
           floatingLabelText="Title"
           fullWidth={true}
           value={title}
         />
         <TextField
-          onChange={(event) => { this.textFieldOnChange('notes', event); }}
+          onChange={(event) => { this.onTextFieldChange('notes', event); }}
           floatingLabelText="Notes (optional)"
           fullWidth={true}
           value={notes}

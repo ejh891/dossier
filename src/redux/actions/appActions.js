@@ -1,5 +1,12 @@
 import * as ActionTypes from './actionTypes';
 
+export function toggleInitializing(initializing) {
+  return {
+      type: ActionTypes.TOGGLE_INITIALIZING,
+      initializing,
+  }
+}
+
 export function toggleEditing(editing) {
     return {
         type: ActionTypes.TOGGLE_EDITING,
@@ -25,5 +32,12 @@ export function toggleUploading(uploading) {
   return {
       type: ActionTypes.TOGGLE_UPLOADING,
       uploading,
+  }
+}
+
+export function toggleAuthenticating(authenticating) {
+  return {
+      type: ActionTypes.TOGGLE_AUTHENTICATING,
+      authenticating,
   }
 }

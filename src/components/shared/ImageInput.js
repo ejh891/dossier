@@ -11,7 +11,7 @@ import ClearIcon from 'material-ui/svg-icons/content/clear';
 import UploadIcon from 'material-ui/svg-icons/file/cloud-upload';
 import { blue300, red300 } from 'material-ui/styles/colors';
 
-import FirebaseService from 'services/FirebaseService';
+import FirebaseUploadService from 'services/firebase/FirebaseUploadService';
 
 import 'css/bouncing.css';
 
@@ -48,7 +48,7 @@ class ImageInput extends Component {
       onRemoveImage,
     } = this.props;
 
-    FirebaseService.deleteUpload(imagePreviewURL);
+    FirebaseUploadService.deleteUpload(imagePreviewURL);
 
     onRemoveImage();
   }

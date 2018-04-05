@@ -1,7 +1,11 @@
 export default {
-    initializing: true,
+    initializing: false,
     editing: false,
     saving: false,
     deleting: false,
+    authenticating: false,
     persons: [],
+    user: null,
+    setUserError: null,
+    createUserError: null,
 }

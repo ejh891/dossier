@@ -27,6 +27,12 @@ export default (state = initialState, action) => {
     /*
      * App Reducer
      */
+    case ActionTypes.TOGGLE_INITIALIZING:
+      return {
+        ...state,
+        // if a bool was supplied, use it. Otherwise, just toggle the existing value
+        initializing: action.initializing !== undefined ? action.initializing : !state.initializing,
+      }
     case ActionTypes.TOGGLE_EDITING:
       return {
         ...state,
@@ -50,6 +56,46 @@ export default (state = initialState, action) => {
         ...state,
         // if a bool was supplied, use it. Otherwise, just toggle the existing value
         uploading: action.uploading !== undefined ? action.uploading : !state.uploading,
+      }
+    case ActionTypes.TOGGLE_AUTHENTICATING:
+      return {
+        ...state,
+        // if a bool was supplied, use it. Otherwise, just toggle the existing value
+        authenticating: action.authenticating !== undefined ? action.authenticating : !state.authenticating,
+      }
+
+    /*
+     * Auth Reducer
+     */
+    case ActionTypes.SET_USER_SUCCESS:
+      return {
+        ...state,
+        // if a bool was supplied, use it. Otherwise, just toggle the existing value
+        user: action.user,
+      }
+    case ActionTypes.SET_USER_FAILURE:
+      console.error('Error setting user', action.error);
+
+      return {
+        ...state,
+        setUserError: action.error,
+      }
+    case ActionTypes.CREATE_USER_FAILURE:
+      console.error('Error creating user', action.error);
+
+      return {
+        ...state,
+        createUserError: action.error,
+      }
+    case ActionTypes.CLEAR_SET_USER_ERROR:
+      return {
+        ...state,
+        setUserError: null,
+      }
+    case ActionTypes.CLEAR_CREATE_USER_ERROR:
+      return {
+        ...state,
+        createUserError: null,
       }
 
     /*

@@ -1,7 +1,7 @@
 import * as Types from './actionTypes';
 import * as appActions from './appActions';
 import RecordService from 'services/RecordService';
-import FirebaseService from 'services/FirebaseService';
+import FirebaseUploadService from 'services/firebase/FirebaseUploadService';
 
 export function addRecordSuccess(record) {
   return {
@@ -90,7 +90,7 @@ export function deleteRecord(recordId) {
       // when the record is deleted, attempt to free up storage by deleting uploads associated with the record
       // we don't wait for this to finish
       if (deletedRecord.imageURL) {
-        FirebaseService.deleteUpload(deletedRecord.imageURL);
+        FirebaseUploadService.deleteUpload(deletedRecord.imageURL);
       }
     } catch (error) {
       dispatch(deleteRecordFailure(error));

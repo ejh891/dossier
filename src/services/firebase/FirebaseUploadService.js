@@ -1,22 +1,11 @@
-import firebase from 'firebase';
 import uuidv4 from 'uuid/v4';
 
 import Hosts from 'settings/hosts';
+import { firebaseStorage } from './firebaseProvider';
 
-const config = {
-  apiKey: "AIzaSyA6jy_v2dWihiqrw-Jp_xcBr-f_jMLDjWY",
-  authDomain: "dossier-953fe.firebaseapp.com",
-  databaseURL: "https://dossier-953fe.firebaseio.com",
-  projectId: "dossier-953fe",
-  storageBucket: "dossier-953fe.appspot.com",
-  messagingSenderId: "1048697460512"
-};
+const storageRef = firebaseStorage.refFromURL(Hosts.googleCloudStorageBucket);
 
-firebase.initializeApp(config);
-
-const storageRef = firebase.storage().refFromURL(Hosts.googleCloudStorageBucket);
-
-class FirebaseService {
+class FirebaseUploadService {
   static async upload(file) {
     const ref = storageRef.child(uuidv4());
 
@@ -50,10 +39,10 @@ class FirebaseService {
   }
 
   static async deleteUpload(url) {
-    const ref = firebase.storage().refFromURL(url);
+    const ref = firebaseStorage.refFromURL(url);
 
     ref.delete();
   }
 }
 
-export default FirebaseService;
+export default FirebaseUploadService;

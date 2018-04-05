@@ -1,7 +1,7 @@
 import * as Types from './actionTypes';
 import * as appActions from './appActions';
 
-import FirebaseService from 'services/FirebaseService';
+import FirebaseUploadService from 'services/firebase/FirebaseUploadService';
 
 export function uploadSuccess(url) {
   return {
@@ -22,7 +22,7 @@ export function upload(file) {
       try {
           dispatch(appActions.toggleUploading(true));
 
-          const url = await FirebaseService.upload(file);
+          const url = await FirebaseUploadService.upload(file);
 
           dispatch(uploadSuccess(url));
 
