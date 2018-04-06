@@ -14,7 +14,7 @@ self.addEventListener('message', (event) => {
     const personResults = fuzzy.filter(query, persons, {
       pre: '<',
       post: '>',
-      extract: (person) => {
+      extract: (person) => { // map objects to searchable strings
         return person.name;
       },
     }).map(el => {
@@ -27,7 +27,7 @@ self.addEventListener('message', (event) => {
     const recordResults = fuzzy.filter(query, records, {
       pre: '<',
       post: '>',
-      extract: (record) => {
+      extract: (record) => { // map objects to searchable strings
         return `${record.title}: ${record.notes}`
       }
     }).map(el => {

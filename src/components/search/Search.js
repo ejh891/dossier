@@ -53,6 +53,8 @@ class Search extends Component {
     }
 
     const persons = this.props.persons;
+
+    // collect all records into a single array
     const records = persons.reduce((acc, person) => {
       return [
         ...acc,
@@ -61,7 +63,7 @@ class Search extends Component {
     }, []);
 
     this.fuzzySearchWorker.postMessage({
-      persons: this.props.persons,
+      persons,
       records,
       query
     });
@@ -85,7 +87,7 @@ class Search extends Component {
         onLeftIconButtonClick={() => { history.push('/persons'); }}
       >
       <div style={{ marginTop: 20 }}>
-        <SearchBar 
+        <SearchBar
           onChange={this.onSearch}
           onRequestSearch={this.onSearch}
         />
